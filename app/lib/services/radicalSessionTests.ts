@@ -7,6 +7,8 @@ import {
   type UUID,
 } from "~/types";
 import {
+  postRadicalSessionTestAnswer,
+  postRadicalSessionTestCreate,
   postRadicalSessionTestFinish,
   getRadicalSessionTests,
   getRadicalSessionTestResult,
@@ -20,6 +22,39 @@ import { MissedQuestionError, UnknownBackendError } from "../errors";
  * response
  */
 export class RadicalSessionTestRepository {
+  public static async create(sessionId: UUID): Promise<RadicalSessionTest> {
+    return await postRadicalSessionTestCreate(sessionId);
+  }
+
+  public static async answer(
+    id: UUID,
+    questionNum: number,
+    answer: "a" | "b" | "c" | "d" | "e",
+  ) {
+    try {
+      await postRadicalSessionTestAnswer({ id, questionNum, answer });
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        if (isBackendErrorSchema(error.response?.data)) {
+          if (isMissedQuestionErrorSchema(error.response.data)) {
+            throw new MissedQuestionError(
+              error.response.data.title,
+              error.response.data.details,
+              error.response.data.payload.questionMissed,
+            );
+          }
+
+          throw new UnknownBackendError(
+            error.response.data.title,
+            error.response.data.details,
+          );
+        }
+      }
+
+      throw error;
+    }
+  }
+
   public static async list(
     id: UUID,
     page: number = 1,

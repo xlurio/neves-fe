@@ -1,24 +1,15 @@
-import { randomUUID } from "crypto";
-import { NotImplementedError } from "./errors";
+import { api } from "./api";
 import type {
+  GetRadicalSessionTestQuestionResponseSchema,
+  GetRadicalSessionTestResultResponseSchema,
   PaginatedBackendResponse,
   Radical,
   RadicalSession,
   RadicalSessionTest,
-  GetRadicalSessionTestQuestionResponseSchema,
-  GetRadicalSessionTestResultResponseSchema,
   User,
   UserStatistics,
   UUID,
 } from "~/types";
-import {
-  makeDummyRadical,
-  makeDummyRadicalSessions,
-  makeDummyRadicalSessionTest,
-  makeDummyRadicalSessionTestQuestion,
-  makeDummyRadicalSessionTestResult,
-  makeDummyUserStats,
-} from "./dummies";
 
 interface PostAuthenticateRequestSchema {
   username: string;
@@ -50,50 +41,31 @@ export interface GetRadicalSessionTestResultParams {
   id: UUID;
 }
 
+export interface PostRadicalSessionTestAnswerParams {
+  id: UUID;
+  questionNum: number;
+  answer: "a" | "b" | "c" | "d" | "e";
+}
+
 export async function postAuthenticate(data: PostAuthenticateRequestSchema) {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return;
-  } else {
-    throw new NotImplementedError(
-      "`POST /api/authenticate` endpoint was not integrated yet",
-    );
-  }
+  await api.post("/api/authenticate", data);
 }
 
 export async function postUserCreate(
   data: PostUserCreateRequestSchema,
 ): Promise<User> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return {
-      id: randomUUID(),
-      username: "user",
-      password: "somepwd",
-    };
-  } else {
-    throw new NotImplementedError(
-      "`POST /api/users` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.post<User>("/api/users", data);
+  return response.data;
 }
 
 export async function getStatisticsMe(): Promise<UserStatistics> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return makeDummyUserStats();
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/stats/me` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.get<UserStatistics>("/api/stats/me");
+  return response.data;
 }
 
-export async function getRadicalSession(id: UUID) {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return makeDummyRadicalSessions();
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions/{id}` endpoint was not integrated yet",
-    );
-  }
+export async function getRadicalSession(id: UUID): Promise<RadicalSession> {
+  const response = await api.get<RadicalSession>(`/api/radicals/sessions/${id}`);
+  return response.data;
 }
 
 export async function getRadicalSessions({
@@ -101,18 +73,11 @@ export async function getRadicalSessions({
 }: GetRadicalSessionsParams): Promise<
   PaginatedBackendResponse<RadicalSession>
 > {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return {
-      count: 1,
-      next: null,
-      previous: null,
-      results: [makeDummyRadicalSessions()],
-    };
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.get<PaginatedBackendResponse<RadicalSession>>(
+    "/api/radicals/sessions",
+    { params: { page } },
+  );
+  return response.data;
 }
 
 export async function getRadicalSessionRadicals({
@@ -121,18 +86,11 @@ export async function getRadicalSessionRadicals({
 }: GetRadicalSessionRadicalsParams): Promise<
   PaginatedBackendResponse<Radical>
 > {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return {
-      count: 1,
-      next: null,
-      previous: null,
-      results: [makeDummyRadical()],
-    };
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions/{id}/radicals` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.get<PaginatedBackendResponse<Radical>>(
+    `/api/radicals/sessions/${id}/radicals`,
+    { params: { page } },
+  );
+  return response.data;
 }
 
 export async function getRadicalSessionTests({
@@ -141,55 +99,49 @@ export async function getRadicalSessionTests({
 }: GetRadicalSessionTestsParams): Promise<
   PaginatedBackendResponse<RadicalSessionTest>
 > {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return {
-      count: 3,
-      next: null,
-      previous: null,
-      results: [
-        makeDummyRadicalSessionTest(),
-        makeDummyRadicalSessionTest(),
-        makeDummyRadicalSessionTest(),
-      ],
-    };
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions/{id}/tests` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.get<PaginatedBackendResponse<RadicalSessionTest>>(
+    `/api/radicals/sessions/${id}/tests`,
+    { params: { page } },
+  );
+  return response.data;
+}
+
+export async function postRadicalSessionTestCreate(
+  sessionId: UUID,
+): Promise<RadicalSessionTest> {
+  const response = await api.post<RadicalSessionTest>(
+    `/api/radicals/sessions/${sessionId}/tests`,
+  );
+  return response.data;
 }
 
 export async function getRadicalSessionTestQuestion({
   id,
   questionNum,
 }: GetRadicalSessionTestQuestionParams): Promise<GetRadicalSessionTestQuestionResponseSchema> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return makeDummyRadicalSessionTestQuestion(questionNum);
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions/{id}/radicals` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.get<GetRadicalSessionTestQuestionResponseSchema>(
+    `/api/radicals/test/${id}/question/${questionNum}`,
+  );
+  return response.data;
+}
+
+export async function postRadicalSessionTestAnswer({
+  id,
+  questionNum,
+  answer,
+}: PostRadicalSessionTestAnswerParams) {
+  await api.post(`/api/radicals/test/${id}/answer`, { questionNum, answer });
 }
 
 export async function postRadicalSessionTestFinish(id: UUID) {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions/{id}/radicals` endpoint was not integrated yet",
-    );
-  }
+  await api.post(`/api/radicals/test/${id}/finish`);
 }
 
 export async function getRadicalSessionTestResult({
   id,
 }: GetRadicalSessionTestResultParams): Promise<GetRadicalSessionTestResultResponseSchema> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return makeDummyRadicalSessionTestResult(id);
-  } else {
-    throw new NotImplementedError(
-      "`GET /api/radicals/sessions/tests/{id}/result` endpoint was not integrated yet",
-    );
-  }
+  const response = await api.get<GetRadicalSessionTestResultResponseSchema>(
+    `/api/radicals/sessions/tests/${id}/result`,
+  );
+  return response.data;
 }

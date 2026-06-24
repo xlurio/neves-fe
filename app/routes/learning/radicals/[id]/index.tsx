@@ -9,9 +9,12 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { useRadicalSessionQuery } from "~/hooks/useRadicalSessionQuery";
 import { useRadicalSessionTestsQuery } from "~/hooks/useRadicalSessionTestsQuery";
+import { RadicalSessionTestRepository } from "~/lib/services/radicalSessionTests";
 import type { UUID } from "~/types";
 
 interface RadicalSessionPathParams {
@@ -20,8 +23,14 @@ interface RadicalSessionPathParams {
 
 export default function RadicalSessionRoute() {
   const params = useParams() as unknown as RadicalSessionPathParams;
+  const navigate = useNavigate();
   const radicalSessionQuery = useRadicalSessionQuery(params.radicalSessionId);
   const testsQuery = useRadicalSessionTestsQuery(params.radicalSessionId);
+
+  const handleCreateTest = async () => {
+    const test = await RadicalSessionTestRepository.create(params.radicalSessionId);
+    navigate(`/learning/radicals/${params.radicalSessionId}/test?testId=${test.id}`);
+  };
 
   return (
     <Box>
@@ -45,11 +54,9 @@ export default function RadicalSessionRoute() {
             <Paper>
               <Typography variant="h3">Test</Typography>
               {
-                <Link
-                  href={`/learning/radicals/${radicalSessionQuery.data!.id}/test`}
-                >
+                <Button type="button" onClick={handleCreateTest}>
                   New test
-                </Link>
+                </Button>
               }
               <Table>
                 <TableHead>
