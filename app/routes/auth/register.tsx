@@ -64,6 +64,7 @@ export default function RegisterRoute() {
               <TextField
                 {...field}
                 label="Password"
+                type="password"
                 variant="outlined"
                 fullWidth
                 error={!!fieldState.error}
@@ -78,6 +79,7 @@ export default function RegisterRoute() {
               <TextField
                 {...field}
                 label="Confirm your password"
+                type="password"
                 variant="outlined"
                 fullWidth
                 error={!!fieldState.error}

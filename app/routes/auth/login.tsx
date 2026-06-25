@@ -10,6 +10,7 @@ import { useLoginMutation } from "~/hooks/useLoginMutation";
 import { BackendError } from "~/lib/errors";
 import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 const loginFormSchema = z.object({
   username: z.string(),
@@ -42,37 +43,40 @@ export default function LoginRoute() {
     <Box>
       <Typography variant="h2">Login</Typography>
       <FormErrorWrapper formErrorState={errCtrl.formErrorState}>
-        <form onSubmit={handleSubmit(onSubmitLoginForm)}>
-          <Controller
-            name="username"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                label="Username"
-                variant="outlined"
-                fullWidth
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                label="Password"
-                variant="outlined"
-                fullWidth
-                error={!!fieldState.error}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-          <Button type="submit">Enter</Button>
-        </form>
+        <>
+          <form onSubmit={handleSubmit(onSubmitLoginForm)}>
+            <Controller
+              name="username"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  label="Username"
+                  variant="outlined"
+                  fullWidth
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+            <Button type="submit">Enter</Button>
+          </form>
+          <Link href="/register">I'm new here.</Link>
+        </>
       </FormErrorWrapper>
     </Box>
   );
