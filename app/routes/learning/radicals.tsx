@@ -13,7 +13,8 @@ import { useRadicalSessionsQuery } from "~/hooks/useRadicalSessionsQuery";
 
 export function RadicalsRoute() {
   const [page, setPage] = useState(1);
-  const { data: radicalSessionsResult, isPending } = useRadicalSessionsQuery(page);
+  const { data: radicalSessionsResult, isPending } =
+    useRadicalSessionsQuery(page);
   const radicalSessions = radicalSessionsResult?.results ?? [];
   const hasNextPage = Boolean(radicalSessionsResult?.next);
 

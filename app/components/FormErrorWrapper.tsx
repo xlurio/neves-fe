@@ -5,7 +5,7 @@ import type { BackendErrorSchema } from "~/types";
 
 interface FormErrorWrapperProps {
   formErrorState: BackendErrorSchema;
-  children: ReactElement<any, any>;
+  children: ReactElement;
 }
 
 export default function FormErrorWrapper({

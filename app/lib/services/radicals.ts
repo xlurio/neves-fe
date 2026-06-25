@@ -1,4 +1,4 @@
-import type { PaginatedBackendResponse, Radical, UUID } from "~/types";
+import type { PaginatedBackendResponse, Radical } from "~/types";
 import {
   getRadicalSessionRadicals,
   type GetRadicalSessionRadicalsParams,

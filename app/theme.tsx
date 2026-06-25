@@ -1,11 +1,14 @@
-import { Link as RouterLink, type LinkProps as RouterLinkProps } from 'react-router';
-import { type LinkProps } from '@mui/material/Link';
-import { createTheme } from '@mui/material/styles';
-import { forwardRef } from 'react';
+import {
+  Link as RouterLink,
+  type LinkProps as RouterLinkProps,
+} from "react-router";
+import { type LinkProps } from "@mui/material/Link";
+import { createTheme } from "@mui/material/styles";
+import { forwardRef } from "react";
 
 const LinkBehavior = forwardRef<
   HTMLAnchorElement,
-  Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
+  Omit<RouterLinkProps, "to"> & { href: RouterLinkProps["to"] }
 >((props, ref) => {
   const { href, ...other } = props;
   // Map href (Material UI) -> to (react-router)

@@ -84,12 +84,12 @@ export default function RadicalSessionMemorizationRoute() {
             </TableBody>
           </Table>
           <Box>
-            {!!radicalSessionRadicalsQuery.data!.previous ? (
+            {radicalSessionRadicalsQuery.data!.previous ? (
               <Button type="button" onClick={() => setPage(page - 1)}>
                 Prev
               </Button>
             ) : null}
-            {!!radicalSessionRadicalsQuery.data!.next ? (
+            {radicalSessionRadicalsQuery.data!.next ? (
               <Button type="button" onClick={() => setPage(page + 1)}>
                 Next
               </Button>

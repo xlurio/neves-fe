@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useCallback, useReducer } from "react";
 import { NotImplementedError } from "~/lib/errors";
 import type { BackendErrorSchema } from "~/types";
 
@@ -8,18 +8,20 @@ interface FormSetErrorReducerAction {
 }
 
 function isSetErrorFormRdcAct(
-  value: any,
+  value: unknown,
 ): value is FormSetErrorReducerAction {
   return (
+    value !== null &&
     typeof value === "object" &&
     "type" in value &&
     value.type === "SET_ERROR" &&
     "payload" in value &&
+    value.payload !== null &&
     typeof value.payload === "object" &&
     "title" in value.payload &&
     typeof value.payload.title === "string" &&
     "details" in value.payload &&
-    typeof value.payload.title === "string"
+    typeof value.payload.details === "string"
   );
 }
 
@@ -28,10 +30,13 @@ interface FormResetErrorReducerAction {
 }
 
 function isResetErrorFormRdcAct(
-  value: any,
+  value: unknown,
 ): value is FormResetErrorReducerAction {
   return (
-    typeof value === "object" && "type" in value && value.type === "RESET_ERROR"
+    value !== null &&
+    typeof value === "object" &&
+    "type" in value &&
+    value.type === "RESET_ERROR"
   );
 }
 
@@ -62,7 +67,7 @@ export default function useFormErrorWrapper() {
     details: "",
   });
 
-  const setFormError = (title: string, details: string) => {
+  const setFormError = useCallback((title: string, details: string) => {
     reducerDispatch({
       type: "SET_ERROR",
       payload: {
@@ -71,13 +76,13 @@ export default function useFormErrorWrapper() {
         details,
       },
     });
-  };
+  }, []);
 
-  const resetFormError = () => {
+  const resetFormError = useCallback(() => {
     reducerDispatch({
       type: "RESET_ERROR",
     });
-  };
+  }, []);
 
   return {
     setFormError,

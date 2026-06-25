@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api } from "../api";
 import type {
   GetRadicalSessionTestQuestionResponseSchema,
   GetRadicalSessionTestResultResponseSchema,
@@ -6,8 +6,6 @@ import type {
   Radical,
   RadicalSession,
   RadicalSessionTest,
-  User,
-  UserStatistics,
   UUID,
 } from "~/types";
 import {
@@ -16,79 +14,18 @@ import {
   makeDummyRadicalSessionTest,
   makeDummyRadicalSessionTestQuestion,
   makeDummyRadicalSessionTestResult,
-  makeDummyUserStats,
-} from "./dummies";
-
-interface PostAuthenticateRequestSchema {
-  username: string;
-  password: string;
-}
-
-type PostUserCreateRequestSchema = PostAuthenticateRequestSchema;
-
-export interface GetRadicalSessionsParams {
-  page: number;
-}
-
-export interface GetRadicalSessionRadicalsParams {
-  id: UUID;
-  page: number;
-}
-
-export interface GetRadicalSessionTestQuestionParams {
-  id: UUID | undefined;
-  questionNum: number;
-}
-
-export interface GetRadicalSessionTestsParams {
-  id: UUID;
-  page?: number;
-}
-
-export interface GetRadicalSessionTestResultParams {
-  id: UUID;
-}
-
-export interface PostRadicalSessionTestAnswerParams {
-  id: UUID;
-  questionNum: number;
-  answer: "a" | "b" | "c" | "d" | "e";
-}
-
-export async function postAuthenticate(data: PostAuthenticateRequestSchema) {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return;
-  }
-
-  await api.post("/api/authenticate", data);
-}
-
-export async function postUserCreate(
-  data: PostUserCreateRequestSchema,
-): Promise<User> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return {
-      id: "7e28eae1-f854-41e4-87b3-b582354b91ee",
-      username: "user",
-      password: "somepwd",
-    };
-  }
-
-  const response = await api.post<User>("/api/users", data);
-  return response.data;
-}
-
-export async function getStatisticsMe(): Promise<UserStatistics> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
-    return makeDummyUserStats();
-  }
-
-  const response = await api.get<UserStatistics>("/api/stats/me");
-  return response.data;
-}
+} from "../dummies";
+import type {
+  GetRadicalSessionRadicalsParams,
+  GetRadicalSessionsParams,
+  GetRadicalSessionTestQuestionParams,
+  GetRadicalSessionTestResultParams,
+  GetRadicalSessionTestsParams,
+  PostRadicalSessionTestAnswerParams,
+} from "./types";
 
 export async function getRadicalSession(id: UUID): Promise<RadicalSession> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return makeDummyRadicalSessions();
   }
 
@@ -103,7 +40,7 @@ export async function getRadicalSessions({
 }: GetRadicalSessionsParams): Promise<
   PaginatedBackendResponse<RadicalSession>
 > {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return {
       count: 1,
       next: null,
@@ -125,7 +62,7 @@ export async function getRadicalSessionRadicals({
 }: GetRadicalSessionRadicalsParams): Promise<
   PaginatedBackendResponse<Radical>
 > {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return {
       count: 1,
       next: null,
@@ -147,7 +84,7 @@ export async function getRadicalSessionTests({
 }: GetRadicalSessionTestsParams): Promise<
   PaginatedBackendResponse<RadicalSessionTest>
 > {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return {
       count: 3,
       next: null,
@@ -180,7 +117,7 @@ export async function getRadicalSessionTestQuestion({
   id,
   questionNum,
 }: GetRadicalSessionTestQuestionParams): Promise<GetRadicalSessionTestQuestionResponseSchema> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return makeDummyRadicalSessionTestQuestion(questionNum);
   }
 
@@ -199,7 +136,7 @@ export async function postRadicalSessionTestAnswer({
 }
 
 export async function postRadicalSessionTestFinish(id: UUID) {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return;
   }
 
@@ -209,7 +146,7 @@ export async function postRadicalSessionTestFinish(id: UUID) {
 export async function getRadicalSessionTestResult({
   id,
 }: GetRadicalSessionTestResultParams): Promise<GetRadicalSessionTestResultResponseSchema> {
-  if (!!import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return makeDummyRadicalSessionTestResult(id);
   }
 

@@ -8,7 +8,9 @@ export interface BackendErrorSchema {
   details: string;
 }
 
-export function isBackendErrorSchema(value: any): value is BackendErrorSchema {
+export function isBackendErrorSchema(
+  value: unknown,
+): value is BackendErrorSchema {
   return (
     value !== null &&
     typeof value === "object" &&
@@ -28,7 +30,7 @@ export interface MissedQuestionErrorSchema extends BackendErrorSchema {
 }
 
 export function isMissedQuestionErrorSchema(
-  value: any,
+  value: unknown,
 ): value is MissedQuestionErrorSchema {
   return (
     isBackendErrorSchema(value) &&

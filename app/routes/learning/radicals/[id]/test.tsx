@@ -152,7 +152,7 @@ export default function RadicalSessionTestRoute() {
                   </List>
                 </Stack>
                 <Box>
-                  {!!radicalSessionTestQuestionQuery.data!.previous ? (
+                  {radicalSessionTestQuestionQuery.data!.previous ? (
                     <Button
                       type="button"
                       onClick={() => setQuestionNum(questionNum - 1)}
@@ -160,7 +160,7 @@ export default function RadicalSessionTestRoute() {
                       Prev
                     </Button>
                   ) : null}
-                  {!!radicalSessionTestQuestionQuery.data!.next ? (
+                  {radicalSessionTestQuestionQuery.data!.next ? (
                     <Button
                       type="button"
                       onClick={() => setQuestionNum(questionNum + 1)}

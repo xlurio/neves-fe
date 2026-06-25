@@ -28,8 +28,12 @@ export default function RadicalSessionRoute() {
   const testsQuery = useRadicalSessionTestsQuery(params.radicalSessionId);
 
   const handleCreateTest = async () => {
-    const test = await RadicalSessionTestRepository.create(params.radicalSessionId);
-    navigate(`/learning/radicals/${params.radicalSessionId}/test?testId=${test.id}`);
+    const test = await RadicalSessionTestRepository.create(
+      params.radicalSessionId,
+    );
+    navigate(
+      `/learning/radicals/${params.radicalSessionId}/test?testId=${test.id}`,
+    );
   };
 
   return (
