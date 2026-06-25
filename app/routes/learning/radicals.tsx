@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useRadicalSessionsQuery } from "~/hooks/useRadicalSessionsQuery";
 
-export function RadicalsRoute() {
+export default function RadicalsRoute() {
   const [page, setPage] = useState(1);
   const { data: radicalSessionsResult, isPending } =
     useRadicalSessionsQuery(page);

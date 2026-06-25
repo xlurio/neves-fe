@@ -14,8 +14,8 @@ export default [
   layout("routes/protected-layout.tsx", [
     index("routes/index.tsx"),
     ...prefix("learning", [
+      route("radicals", "routes/learning/radicals.tsx"),
       ...prefix("radicals", [
-        route("", "routes/learning/radicals.tsx"),
         route(":radicalSessionId", "routes/learning/radicals/[id]/index.tsx"),
         route(
           ":radicalSessionId/memorization",
