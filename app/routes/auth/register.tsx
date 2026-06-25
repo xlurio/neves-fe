@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import { useRegisterMutation } from "~/hooks/useRegisterMutation";
 import { BackendError } from "~/lib/errors";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router";
 
 const registerFormSchema = z
   .object({
@@ -25,12 +26,14 @@ export default function RegisterRoute() {
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(registerFormSchema),
   });
+  const navigate = useNavigate();
   const registerMutation = useRegisterMutation();
 
   const onSubmitRegisterForm = async (formData: RegisterFormInputSchema) => {
     try {
       errCtrl.resetFormError();
       await registerMutation.mutateAsync(formData);
+      navigate("/");
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);

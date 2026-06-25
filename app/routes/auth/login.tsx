@@ -31,7 +31,7 @@ export default function LoginRoute() {
     try {
       errCtrl.resetFormError();
       await loginMutation.mutateAsync(formData);
-      navigate("");
+      navigate("/");
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);
@@ -66,6 +66,7 @@ export default function LoginRoute() {
                 <TextField
                   {...field}
                   label="Password"
+                  type="password"
                   variant="outlined"
                   fullWidth
                   error={!!fieldState.error}
