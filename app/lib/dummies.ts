@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import type {
   GetRadicalSessionTestQuestionResponseSchema,
   GetRadicalSessionTestResultResponseSchema,
@@ -21,7 +20,7 @@ export function makeDummyUserStats(): UserStatistics {
 
 export function makeDummyRadicalSessions(): RadicalSession {
   return {
-    id: randomUUID(),
+    id: "7e28eae1-f854-41e4-87b3-b582354b91ee",
     createdAt: new Date().toISOString(),
     numOfRadicals: 10,
     highestScore: 0,
@@ -30,7 +29,7 @@ export function makeDummyRadicalSessions(): RadicalSession {
 
 export function makeDummyRadical(): Radical {
   return {
-    id: randomUUID(),
+    id: "7e28eae1-f854-41e4-87b3-b582354b91ee",
     mainRepresentation: 0x4eba,
     otherVars: [0x4eba, 0x4ebb],
     pinyin: "rén",
@@ -43,7 +42,7 @@ export function makeDummyRadicalSessionTest(): RadicalSessionTest {
   const now = new Date();
   now.setDate(now.getDate() - Math.floor(Math.random() * 7));
   return {
-    id: randomUUID(),
+    id: "7e28eae1-f854-41e4-87b3-b582354b91ee",
     finishedAt: now.toISOString(),
     score: Math.floor(Math.random() * 100) + 1,
   };
@@ -52,7 +51,7 @@ export function makeDummyRadicalSessionTest(): RadicalSessionTest {
 export function makeDummyRadicalSessionTestQuestion(
   questionNum: number = 1,
 ): GetRadicalSessionTestQuestionResponseSchema {
-  const questionId = randomUUID();
+  const questionId = "7e28eae1-f854-41e4-87b3-b582354b91ee";
 
   return [
     {
@@ -185,7 +184,7 @@ export function makeDummyRadicalSessionTestQuestion(
 }
 
 export function makeDummyRadicalSessionTestResult(
-  id: string = randomUUID(),
+  id: string = "7e28eae1-f854-41e4-87b3-b582354b91ee",
 ): GetRadicalSessionTestResultResponseSchema {
   return {
     id,
