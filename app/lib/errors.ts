@@ -30,3 +30,11 @@ export class MissedQuestionError extends BackendError {
     this.questionMissed = questionMissed;
   }
 }
+
+export class UnauthenticatedError extends Error {
+  override readonly name = "UnauthenticatedError";
+
+  constructor() {
+    super("Unauthenticated");
+  }
+}

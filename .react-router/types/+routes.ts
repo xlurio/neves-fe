@@ -50,9 +50,9 @@ type RouteFiles = {
     id: "root";
     page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/radicals/:radicalSessionId" | "/learning/radicals/:radicalSessionId/memorization" | "/learning/radicals/:radicalSessionId/test" | "/learning/radicals/tests/:id/result";
   };
-  "routes/index.tsx": {
-    id: "routes/index";
-    page: "/";
+  "routes/auth-layout.tsx": {
+    id: "routes/auth-layout";
+    page: "/login" | "/register";
   };
   "routes/auth/login.tsx": {
     id: "routes/auth/login";
@@ -61,6 +61,14 @@ type RouteFiles = {
   "routes/auth/register.tsx": {
     id: "routes/auth/register";
     page: "/register";
+  };
+  "routes/protected-layout.tsx": {
+    id: "routes/protected-layout";
+    page: "/" | "/learning/radicals" | "/learning/radicals/:radicalSessionId" | "/learning/radicals/:radicalSessionId/memorization" | "/learning/radicals/:radicalSessionId/test" | "/learning/radicals/tests/:id/result";
+  };
+  "routes/index.tsx": {
+    id: "routes/index";
+    page: "/";
   };
   "routes/learning/radicals.tsx": {
     id: "routes/learning/radicals";
@@ -86,9 +94,11 @@ type RouteFiles = {
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
-  "routes/index": typeof import("./app/routes/index.tsx");
+  "routes/auth-layout": typeof import("./app/routes/auth-layout.tsx");
   "routes/auth/login": typeof import("./app/routes/auth/login.tsx");
   "routes/auth/register": typeof import("./app/routes/auth/register.tsx");
+  "routes/protected-layout": typeof import("./app/routes/protected-layout.tsx");
+  "routes/index": typeof import("./app/routes/index.tsx");
   "routes/learning/radicals": typeof import("./app/routes/learning/radicals.tsx");
   "routes/learning/radicals/[id]/index": typeof import("./app/routes/learning/radicals/[id]/index.tsx");
   "routes/learning/radicals/[id]/memorization": typeof import("./app/routes/learning/radicals/[id]/memorization.tsx");
