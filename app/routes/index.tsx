@@ -5,12 +5,10 @@ import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { makeDummyUserStats } from "~/lib/dummies";
 import { useUserStatisticsQuery } from "~/hooks/useUserStatisticsQuery";
 
 export default function IndexRoute() {
   const { data: userStats, isPending } = useUserStatisticsQuery();
-  const currentUserStats = userStats ?? makeDummyUserStats();
 
   return (
     <Box>
@@ -23,12 +21,11 @@ export default function IndexRoute() {
                 Logographical System: Radicals
               </Typography>
               <Typography variant="body1">
-                {currentUserStats.chineseLogographicSystem.radicalsLearned}/
-                {currentUserStats.chineseLogographicSystem.totalRadicals}
+                {userStats?.chineseLogographicSystem.radicalsLearned || 0}/ 100
               </Typography>
               <LinearProgress
                 variant="determinate"
-                value={currentUserStats.chineseLogographicSystem.progress}
+                value={userStats?.chineseLogographicSystem.progress || 0}
                 aria-label="Radicals learned"
               />
             </Paper>

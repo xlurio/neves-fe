@@ -14,7 +14,7 @@ export default function ProtectedLayout() {
     }
   }, [error, navigate]);
 
-  if (isPending) {
+  if (isPending || error instanceof UnauthenticatedError) {
     return null;
   }
 
