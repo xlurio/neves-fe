@@ -13,6 +13,7 @@ import { useRadicalSessionRadicalsQuery } from "~/hooks/useRadicalSessionRadical
 import type { UUID } from "~/types";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import { useRadicalSessionRadicalsMutation } from "~/hooks/useRadicalSessionRadicalsMutation";
 
 interface RadicalSessionPathParams {
   radicalSessionId: UUID;
@@ -26,6 +27,14 @@ export default function RadicalSessionMemorizationRoute() {
     id: params.radicalSessionId,
     page,
   });
+  const radicalSessionRadicalsMutation = useRadicalSessionRadicalsMutation(
+    params.radicalSessionId,
+  );
+
+  const handleAddRadical = async () => {
+    await radicalSessionRadicalsMutation.mutateAsync();
+    radicalSessionRadicalsQuery.refetch();
+  };
 
   return (
     <Box>
@@ -37,6 +46,9 @@ export default function RadicalSessionMemorizationRoute() {
               new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
           </Typography>
           <Typography variant="h3">Memorization</Typography>
+          <Button type="button" onClick={handleAddRadical}>
+            Add radical
+          </Button>
           <Table>
             <TableHead>
               <TableRow>
@@ -52,13 +64,15 @@ export default function RadicalSessionMemorizationRoute() {
                 <>
                   {radicalSessionRadicalsQuery.data!.results.map((radical) => (
                     <TableRow key={radical.id}>
-                      <TableCell>
-                        {radical.id}
-                      </TableCell>
+                      <TableCell>{radical.id}</TableCell>
                       <TableCell>{radical.pinyin}</TableCell>
                       <TableCell>{radical.meaning}</TableCell>
                       <TableCell>
-                        <audio controls controlsList="play" src={radical.pronounce} />
+                        <audio
+                          controls
+                          controlsList="play"
+                          src={radical.pronounce}
+                        />
                       </TableCell>
                       <TableCell>
                         <Button type="button" color="error">
@@ -67,11 +81,6 @@ export default function RadicalSessionMemorizationRoute() {
                       </TableCell>
                     </TableRow>
                   ))}
-                  <TableRow>
-                    <TableCell colSpan={6}>
-                      <Button>Add radical</Button>
-                    </TableCell>
-                  </TableRow>
                 </>
               ) : (
                 <Skeleton />

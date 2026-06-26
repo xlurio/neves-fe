@@ -1,10 +1,15 @@
-import type { PaginatedBackendResponse, Radical } from "~/types";
+import type { PaginatedBackendResponse, Radical, UUID } from "~/types";
 import {
   getRadicalSessionRadicals,
+  postRadicalSessionsRadical,
   type GetRadicalSessionRadicalsParams,
 } from "../adapters";
 
 export class RadicalRepository {
+  public static async createForSession(id: UUID) {
+    return await postRadicalSessionsRadical(id);
+  }
+
   public static async filterBySession({
     id,
     page,

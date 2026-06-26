@@ -87,6 +87,17 @@ export async function getRadicalSessionRadicals({
   return response.data;
 }
 
+export async function postRadicalSessionsRadical(id: UUID) {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+    return makeDummyRadical();
+  }
+
+  const response = await api.post<Radical>(
+    `/api/radicals/sessions/${id}/radicals`,
+  );
+  return response.data;
+}
+
 export async function getRadicalSessionTests({
   id,
   page = 1,

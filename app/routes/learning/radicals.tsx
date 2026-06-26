@@ -30,10 +30,7 @@ export default function RadicalsRoute() {
   return (
     <Box>
       <Typography variant="h2">Radicals</Typography>
-      <Button
-        type="button"
-        onClick={handleCreateRadicalSession}
-      >
+      <Button type="button" onClick={handleCreateRadicalSession}>
         Create radical session
       </Button>
       {!isPending ? (
@@ -47,14 +44,15 @@ export default function RadicalsRoute() {
           </TableHead>
           <TableBody>
             {radicalSessions.map((radicalSession) => (
-              <Link href={`/learning/radicals/${radicalSession.id}`}>
-                <TableRow>
-                  <TableCell>
-                    {new Date(radicalSession.createdAt).toLocaleString()}
-                  </TableCell>
-                  <TableCell>{radicalSession.numOfRadicals}</TableCell>
-                  <TableCell>{radicalSession.highestScore} / 100</TableCell>
-                </TableRow>
+              <Link
+                sx={{ display: "table-row" }}
+                href={`/learning/radicals/${radicalSession.id}`}
+              >
+                <TableCell>
+                  {new Date(radicalSession.createdAt).toLocaleString()}
+                </TableCell>
+                <TableCell>{radicalSession.numOfRadicals}</TableCell>
+                <TableCell>{radicalSession.highestScore} / 100</TableCell>
               </Link>
             ))}
           </TableBody>
