@@ -32,7 +32,7 @@ export default function RadicalSessionRoute() {
       params.radicalSessionId,
     );
     navigate(
-      `/learning/radicals/${params.radicalSessionId}/test?testId=${test.id}`,
+      `/learning/radicals/${params.radicalSessionId}/test/${test.id}`,
     );
   };
 

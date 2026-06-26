@@ -33,9 +33,9 @@ type Pages = {
       "radicalSessionId": string;
     };
   };
-  "/learning/radicals/:radicalSessionId/test": {
+  "/learning/radicals/tests/:testId": {
     params: {
-      "radicalSessionId": string;
+      "testId": string;
     };
   };
   "/learning/radicals/tests/:id/result": {
@@ -48,7 +48,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/radicals/:radicalSessionId" | "/learning/radicals/:radicalSessionId/memorization" | "/learning/radicals/:radicalSessionId/test" | "/learning/radicals/tests/:id/result";
+    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/radicals/:radicalSessionId" | "/learning/radicals/:radicalSessionId/memorization" | "/learning/radicals/tests/:testId" | "/learning/radicals/tests/:id/result";
   };
   "routes/auth-layout.tsx": {
     id: "routes/auth-layout";
@@ -64,7 +64,7 @@ type RouteFiles = {
   };
   "routes/protected-layout.tsx": {
     id: "routes/protected-layout";
-    page: "/" | "/learning/radicals" | "/learning/radicals/:radicalSessionId" | "/learning/radicals/:radicalSessionId/memorization" | "/learning/radicals/:radicalSessionId/test" | "/learning/radicals/tests/:id/result";
+    page: "/" | "/learning/radicals" | "/learning/radicals/:radicalSessionId" | "/learning/radicals/:radicalSessionId/memorization" | "/learning/radicals/tests/:testId" | "/learning/radicals/tests/:id/result";
   };
   "routes/index.tsx": {
     id: "routes/index";
@@ -82,12 +82,12 @@ type RouteFiles = {
     id: "routes/learning/radicals/[id]/memorization";
     page: "/learning/radicals/:radicalSessionId/memorization";
   };
-  "routes/learning/radicals/[id]/test.tsx": {
-    id: "routes/learning/radicals/[id]/test";
-    page: "/learning/radicals/:radicalSessionId/test";
+  "routes/learning/radicals/tests/[id]/index.tsx": {
+    id: "routes/learning/radicals/tests/[id]/index";
+    page: "/learning/radicals/tests/:testId";
   };
-  "routes/learning/tests/[id]/result.tsx": {
-    id: "routes/learning/tests/[id]/result";
+  "routes/learning/radicals/tests/[id]/result.tsx": {
+    id: "routes/learning/radicals/tests/[id]/result";
     page: "/learning/radicals/tests/:id/result";
   };
 };
@@ -102,6 +102,6 @@ type RouteModules = {
   "routes/learning/radicals": typeof import("./app/routes/learning/radicals.tsx");
   "routes/learning/radicals/[id]/index": typeof import("./app/routes/learning/radicals/[id]/index.tsx");
   "routes/learning/radicals/[id]/memorization": typeof import("./app/routes/learning/radicals/[id]/memorization.tsx");
-  "routes/learning/radicals/[id]/test": typeof import("./app/routes/learning/radicals/[id]/test.tsx");
-  "routes/learning/tests/[id]/result": typeof import("./app/routes/learning/tests/[id]/result.tsx");
+  "routes/learning/radicals/tests/[id]/index": typeof import("./app/routes/learning/radicals/tests/[id]/index.tsx");
+  "routes/learning/radicals/tests/[id]/result": typeof import("./app/routes/learning/radicals/tests/[id]/result.tsx");
 };

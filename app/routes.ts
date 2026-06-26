@@ -22,10 +22,10 @@ export default [
           "routes/learning/radicals/[id]/memorization.tsx",
         ),
         route(
-          ":radicalSessionId/test",
-          "routes/learning/radicals/[id]/test.tsx",
+          "tests/:testId",
+          "routes/learning/radicals/tests/[id]/index.tsx",
         ),
-        route("tests/:id/result", "routes/learning/tests/[id]/result.tsx"),
+        route("tests/:id/result", "routes/learning/radicals/tests/[id]/result.tsx"),
       ]),
     ]),
   ]),

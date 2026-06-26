@@ -159,6 +159,7 @@ export interface GetRadicalSessionTestQuestionResponseSchema {
   next: URL | null;
   previous: URL | null;
   id: UUID;
+  radicalsSessionId: UUID;
   payload: RadicalSessionTestQuestion;
 }
 
@@ -174,6 +175,7 @@ export interface RadicalSessionTestResultQuestionToAudio
 
 export interface GetRadicalSessionTestResultResponseSchema {
   id: UUID;
+  radicalsSessionId: UUID;
   score: number;
   questions: (
     | RadicalSessionTestResultQuestion

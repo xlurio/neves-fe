@@ -7,5 +7,6 @@ export function useRadicalSessionQuery(id: UUID) {
     queryKey: ["radical-session", id],
     queryFn: () => RadicalSessionRepository.get(id),
     placeholderData: keepPreviousData,
+    enabled: !!id,
   });
 }

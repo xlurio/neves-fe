@@ -21,20 +21,20 @@ import { BackendError } from "~/lib/errors";
 import { isRadicalSessionTestQuestionToAudio, type UUID } from "~/types";
 
 interface RadicalSessionPathParams {
-  radicalSessionId: UUID;
+  testId: UUID;
 }
 
 export default function RadicalSessionTestRoute() {
   const params = useParams() as unknown as RadicalSessionPathParams;
-  const [searchParams] = useSearchParams();
-  const testId = searchParams.get("testId") as UUID | null;
   const navigate = useNavigate();
-  const radicalSessionQuery = useRadicalSessionQuery(params.radicalSessionId);
   const [questionNum, setQuestionNum] = useState(1);
   const radicalSessionTestQuestionQuery = useRadicalSessionTestQuestionQuery({
-    id: testId ?? undefined,
+    id: params.testId ?? undefined,
     questionNum: questionNum,
   });
+  const radicalSessionQuery = useRadicalSessionQuery(
+    radicalSessionTestQuestionQuery.data?.radicalsSessionId || "",
+  );
   const [isOpen, setOpen] = useState(false);
   const errCtrl = useFormErrorWrapper();
   const finishMutation = useRadicalSessionTestFinishMutation();
@@ -45,11 +45,8 @@ export default function RadicalSessionTestRoute() {
   const handleConfirmTest = async () => {
     try {
       errCtrl.resetFormError();
-      if (!testId) {
-        return;
-      }
-      await finishMutation.mutateAsync(testId);
-      navigate(`/learning/radicals/tests/${testId}/result`);
+      await finishMutation.mutateAsync(params.testId);
+      navigate(`/learning/radicals/tests/${params.testId}/result`);
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);
@@ -58,10 +55,6 @@ export default function RadicalSessionTestRoute() {
   };
 
   const handleSelectAlternative = async (alternativeIndex: number) => {
-    if (!testId) {
-      return;
-    }
-
     const answer = ANSWERS[alternativeIndex];
     if (!answer) {
       return;
@@ -70,7 +63,11 @@ export default function RadicalSessionTestRoute() {
     try {
       errCtrl.resetFormError();
       setIsAnswering(true);
-      await RadicalSessionTestRepository.answer(testId, questionNum, answer);
+      await RadicalSessionTestRepository.answer(
+        params.testId,
+        questionNum,
+        answer,
+      );
       await radicalSessionTestQuestionQuery.refetch();
     } catch (error: unknown) {
       if (error instanceof BackendError) {
@@ -116,6 +113,7 @@ export default function RadicalSessionTestRoute() {
                   ) ? (
                     <Paper>
                       <audio
+                        controls
                         src={
                           radicalSessionTestQuestionQuery.data!.payload.audio
                         }

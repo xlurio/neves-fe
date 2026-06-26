@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import FormErrorWrapper from "~/components/FormErrorWrapper";
 import useFormErrorWrapper from "~/hooks/useFormErrorWrapper";
+import { useRadicalSessionQuery } from "~/hooks/useRadicalSessionQuery";
 import { useRadicalSessionTestResultQuery } from "~/hooks/useRadicalSessionTestResultQuery";
 import { BackendError } from "~/lib/errors";
 import {
@@ -27,6 +28,9 @@ export default function RadicalSessionTestResultRoute() {
   const errCtrl = useFormErrorWrapper();
   const { setFormError, resetFormError } = errCtrl;
   const testResultQuery = useRadicalSessionTestResultQuery(params.id);
+  const radicalSessionQuery = useRadicalSessionQuery(
+    testResultQuery.data?.radicalsSessionId || "",
+  );
 
   useEffect(() => {
     if (!testResultQuery.isError) {
@@ -58,7 +62,11 @@ export default function RadicalSessionTestResultRoute() {
 
   return (
     <Box>
-      <Typography variant="h2">Test Result</Typography>
+      <Typography variant="h2">
+        Radical Session -{" "}
+        {new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
+      </Typography>
+      <Typography variant="h3">Test</Typography>
       {testResultQuery.isPending ? (
         <Skeleton height={320} />
       ) : (
