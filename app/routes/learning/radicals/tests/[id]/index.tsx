@@ -68,7 +68,9 @@ export default function RadicalSessionTestRoute() {
         questionNum,
         answer,
       );
-      await radicalSessionTestQuestionQuery.refetch();
+
+      radicalSessionTestQuestionQuery.data?.next &&
+        setQuestionNum(questionNum + 1);
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);
@@ -125,7 +127,7 @@ export default function RadicalSessionTestRoute() {
                       (alternative, index) =>
                         alternative.type === "AUDIO" ? (
                           <ListItem>
-                            <audio src={alternative.payload} />
+                            <audio controls src={alternative.payload} />
                             <Button
                               type="button"
                               onClick={() => handleSelectAlternative(index)}
@@ -150,7 +152,7 @@ export default function RadicalSessionTestRoute() {
                   </List>
                 </Stack>
                 <Box>
-                  {radicalSessionTestQuestionQuery.data!.previous ? (
+                  {radicalSessionTestQuestionQuery.data?.previous ? (
                     <Button
                       type="button"
                       onClick={() => setQuestionNum(questionNum - 1)}
@@ -158,7 +160,7 @@ export default function RadicalSessionTestRoute() {
                       Prev
                     </Button>
                   ) : null}
-                  {radicalSessionTestQuestionQuery.data!.next ? (
+                  {radicalSessionTestQuestionQuery.data?.next ? (
                     <Button
                       type="button"
                       onClick={() => setQuestionNum(questionNum + 1)}

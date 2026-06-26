@@ -14,6 +14,7 @@ import type { UUID } from "~/types";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useRadicalSessionRadicalsMutation } from "~/hooks/useRadicalSessionRadicalsMutation";
+import Link from "@mui/material/Link";
 
 interface RadicalSessionPathParams {
   radicalSessionId: UUID;
@@ -40,6 +41,7 @@ export default function RadicalSessionMemorizationRoute() {
     <Box>
       {radicalSessionQuery.isFetched ? (
         <>
+          <Link href={`/learning/radicals/${params.radicalSessionId}`}>Go Back</Link>
           <Typography variant="h2">
             Radical Session -{" "}
             {radicalSessionRadicalsQuery.isFetched ??

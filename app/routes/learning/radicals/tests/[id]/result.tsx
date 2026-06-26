@@ -64,7 +64,11 @@ export default function RadicalSessionTestResultRoute() {
     <Box>
       <Typography variant="h2">
         Radical Session -{" "}
-        {new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
+        {radicalSessionQuery.isFetched ? (
+          new Date(radicalSessionQuery.data!.createdAt).toLocaleString()
+        ) : (
+          <Skeleton />
+        )}
       </Typography>
       <Typography variant="h3">Test</Typography>
       {testResultQuery.isPending ? (
