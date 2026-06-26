@@ -27,7 +27,7 @@ export default function NavBar({ showLogout = false }: NavBarProps) {
           <Button color="inherit" component={Link} to="/">
             Home
           </Button>
-          <Button color="inherit" component={Link} to="/learning/radicals">
+          <Button color="inherit" component={Link} to="/practice/radicals">
             Radicals
           </Button>
         </Typography>

@@ -41,13 +41,14 @@ export default function RadicalSessionMemorizationRoute() {
     <Box>
       {radicalSessionQuery.isFetched ? (
         <>
-          <Link href={`/learning/radicals/${params.radicalSessionId}`}>Go Back</Link>
+          <Link href={`/practice/radicals/${params.radicalSessionId}`}>Go Back</Link>
           <Typography variant="h2">
             Radical Session -{" "}
             {radicalSessionRadicalsQuery.isFetched ??
               new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
           </Typography>
           <Typography variant="h3">Memorization</Typography>
+          <Link href="/learning/radicals">How to memorize?</Link>
           <Button type="button" onClick={handleAddRadical}>
             Add radical
           </Button>

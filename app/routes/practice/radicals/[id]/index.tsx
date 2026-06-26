@@ -32,7 +32,7 @@ export default function RadicalSessionRoute() {
       params.radicalSessionId,
     );
     navigate(
-      `/learning/radicals/tests/${test.id}`,
+      `/practice/radicals/tests/${test.id}`,
     );
   };
 
@@ -49,7 +49,7 @@ export default function RadicalSessionRoute() {
               <Typography variant="h3">Radicals</Typography>
               {
                 <Link
-                  href={`/learning/radicals/${radicalSessionQuery.data!.id}/memorization`}
+                  href={`/practice/radicals/${radicalSessionQuery.data!.id}/memorization`}
                 >
                   Memorize radicals
                 </Link>
@@ -80,7 +80,7 @@ export default function RadicalSessionRoute() {
                         <TableCell>{test.score}/100</TableCell>
                         <TableCell>
                           <Link
-                            href={`/learning/radicals/tests/${test.id}/result`}
+                            href={`/practice/radicals/tests/${test.id}/result`}
                           >
                             Check result
                           </Link>

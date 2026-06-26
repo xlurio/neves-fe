@@ -15,17 +15,20 @@ export default [
     index("routes/index.tsx"),
     ...prefix("learning", [
       route("radicals", "routes/learning/radicals.tsx"),
+    ]),
+    ...prefix("practice", [
+      route("radicals", "routes/practice/radicals.tsx"),
       ...prefix("radicals", [
-        route(":radicalSessionId", "routes/learning/radicals/[id]/index.tsx"),
+        route(":radicalSessionId", "routes/practice/radicals/[id]/index.tsx"),
         route(
           ":radicalSessionId/memorization",
-          "routes/learning/radicals/[id]/memorization.tsx",
+          "routes/practice/radicals/[id]/memorization.tsx",
         ),
+        route("tests/:testId", "routes/practice/radicals/tests/[id]/index.tsx"),
         route(
-          "tests/:testId",
-          "routes/learning/radicals/tests/[id]/index.tsx",
+          "tests/:id/result",
+          "routes/practice/radicals/tests/[id]/result.tsx",
         ),
-        route("tests/:id/result", "routes/learning/radicals/tests/[id]/result.tsx"),
       ]),
     ]),
   ]),

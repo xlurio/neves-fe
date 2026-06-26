@@ -46,7 +46,7 @@ export default function RadicalSessionTestRoute() {
     try {
       errCtrl.resetFormError();
       await finishMutation.mutateAsync(params.testId);
-      navigate(`/learning/radicals/tests/${params.testId}/result`);
+      navigate(`/practice/radicals/tests/${params.testId}/result`);
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);

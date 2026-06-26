@@ -15,7 +15,7 @@ export default function IndexRoute() {
       <Typography variant="h2">Home</Typography>
       {!isPending ? (
         <Stack>
-          <Link href="/learning/radicals">
+          <Link href="/practice/radicals">
             <Paper>
               <Typography variant="h3">
                 Logographical System: Radicals
