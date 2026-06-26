@@ -13,6 +13,7 @@ export default function IndexRoute() {
   return (
     <Box>
       <Typography variant="h2">Home</Typography>
+      <Link href="/learning/frequency">How often should I study?</Link>
       {!isPending ? (
         <Stack>
           <Link href="/practice/radicals">

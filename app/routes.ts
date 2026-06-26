@@ -15,6 +15,7 @@ export default [
     index("routes/index.tsx"),
     ...prefix("learning", [
       route("radicals", "routes/learning/radicals.tsx"),
+      route("frequency", "routes/learning/frequency.tsx"),
     ]),
     ...prefix("practice", [
       route("radicals", "routes/practice/radicals.tsx"),

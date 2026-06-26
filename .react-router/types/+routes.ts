@@ -23,6 +23,9 @@ type Pages = {
   "/learning/radicals": {
     params: {};
   };
+  "/learning/frequency": {
+    params: {};
+  };
   "/practice/radicals": {
     params: {};
   };
@@ -51,7 +54,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/register" | "/learning/radicals" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result";
+    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result";
   };
   "routes/auth-layout.tsx": {
     id: "routes/auth-layout";
@@ -67,7 +70,7 @@ type RouteFiles = {
   };
   "routes/protected-layout.tsx": {
     id: "routes/protected-layout";
-    page: "/" | "/learning/radicals" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result";
+    page: "/" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result";
   };
   "routes/index.tsx": {
     id: "routes/index";
@@ -76,6 +79,10 @@ type RouteFiles = {
   "routes/learning/radicals.tsx": {
     id: "routes/learning/radicals";
     page: "/learning/radicals";
+  };
+  "routes/learning/frequency.tsx": {
+    id: "routes/learning/frequency";
+    page: "/learning/frequency";
   };
   "routes/practice/radicals.tsx": {
     id: "routes/practice/radicals";
@@ -107,6 +114,7 @@ type RouteModules = {
   "routes/protected-layout": typeof import("./app/routes/protected-layout.tsx");
   "routes/index": typeof import("./app/routes/index.tsx");
   "routes/learning/radicals": typeof import("./app/routes/learning/radicals.tsx");
+  "routes/learning/frequency": typeof import("./app/routes/learning/frequency.tsx");
   "routes/practice/radicals": typeof import("./app/routes/practice/radicals.tsx");
   "routes/practice/radicals/[id]/index": typeof import("./app/routes/practice/radicals/[id]/index.tsx");
   "routes/practice/radicals/[id]/memorization": typeof import("./app/routes/practice/radicals/[id]/memorization.tsx");
