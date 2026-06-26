@@ -80,7 +80,6 @@ export default function RadicalSessionTestResultRoute() {
               <Typography variant="h4">
                 Score: {resultData?.score ?? 0}/100
               </Typography>
-              <Typography variant="body2">Test ID: {params.id}</Typography>
             </Paper>
 
             {resultData?.questions.length ? (
