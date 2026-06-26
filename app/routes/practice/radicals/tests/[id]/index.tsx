@@ -126,7 +126,7 @@ export default function RadicalSessionTestRoute() {
                     {radicalSessionTestQuestionQuery.data!.payload.alternatives.map(
                       (alternative, index) =>
                         alternative.type === "AUDIO" ? (
-                          <ListItem>
+                          <ListItem key={index}>
                             <audio controls src={alternative.payload} />
                             <Button
                               type="button"

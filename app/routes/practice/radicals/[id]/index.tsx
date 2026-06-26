@@ -73,7 +73,7 @@ export default function RadicalSessionRoute() {
                 <TableBody>
                   {testsQuery.isFetched ? (
                     testsQuery.data?.results.map((test) => (
-                      <TableRow>
+                      <TableRow key={test.id}>
                         <TableCell>
                           {new Date(test.finishedAt).toLocaleString()}
                         </TableCell>

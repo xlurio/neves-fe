@@ -45,6 +45,7 @@ export default function RadicalsRoute() {
           <TableBody>
             {radicalSessions.map((radicalSession) => (
               <Link
+                key={radicalSession.id}
                 sx={{ display: "table-row" }}
                 href={`/practice/radicals/${radicalSession.id}`}
               >
