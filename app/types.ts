@@ -71,9 +71,7 @@ export interface RadicalSessionTest {
 }
 
 export interface Radical {
-  id: UUID;
-  mainRepresentation: number;
-  otherVars: number[];
+  id: string;
   pinyin: string;
   meaning: string;
   pronounce: URL;

@@ -9,18 +9,33 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useCreateRadicalSessionMutation } from "~/hooks/useCreateRadicalSessionMutation";
 import { useRadicalSessionsQuery } from "~/hooks/useRadicalSessionsQuery";
 
 export default function RadicalsRoute() {
   const [page, setPage] = useState(1);
   const { data: radicalSessionsResult, isPending } =
     useRadicalSessionsQuery(page);
+  const createRadicalSessionMutation = useCreateRadicalSessionMutation();
   const radicalSessions = radicalSessionsResult?.results ?? [];
   const hasNextPage = Boolean(radicalSessionsResult?.next);
+  const navigate = useNavigate();
+
+  const handleCreateRadicalSession = async () => {
+    const newRadicalSession = await createRadicalSessionMutation.mutateAsync();
+    navigate(`/learning/radicals/${newRadicalSession.id}`);
+  };
 
   return (
     <Box>
       <Typography variant="h2">Radicals</Typography>
+      <Button
+        type="button"
+        onClick={handleCreateRadicalSession}
+      >
+        Create radical session
+      </Button>
       {!isPending ? (
         <Table>
           <TableHead>

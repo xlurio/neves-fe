@@ -42,14 +42,14 @@ export default function RadicalSessionRoute() {
         <>
           <Typography variant="h2">
             Radical Session -{" "}
-            {Date.parse(radicalSessionQuery.data!.createdAt).toLocaleString()}
+            {new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
           </Typography>
           <Stack>
             <Paper>
               <Typography variant="h3">Radicals</Typography>
               {
                 <Link
-                  href={`/learning/radicals/${radicalSessionQuery.data!.id}`}
+                  href={`/learning/radicals/${radicalSessionQuery.data!.id}/memorization`}
                 >
                   Memorize radicals
                 </Link>
@@ -75,7 +75,7 @@ export default function RadicalSessionRoute() {
                     testsQuery.data?.results.map((test) => (
                       <TableRow>
                         <TableCell>
-                          {Date.parse(test.finishedAt).toLocaleString()}
+                          {new Date(test.finishedAt).toLocaleString()}
                         </TableCell>
                         <TableCell>{test.score}/100</TableCell>
                         <TableCell>

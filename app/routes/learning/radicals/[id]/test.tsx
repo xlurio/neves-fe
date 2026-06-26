@@ -98,7 +98,7 @@ export default function RadicalSessionTestRoute() {
           </Dialog>
           <Typography variant="h2">
             Radical Session -{" "}
-            {Date.parse(radicalSessionQuery.data!.createdAt).toLocaleString()}
+            {new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
           </Typography>
           <Typography variant="h3">Test</Typography>
           <Button type="button" onClick={() => setOpen(true)}>

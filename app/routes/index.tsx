@@ -21,7 +21,8 @@ export default function IndexRoute() {
                 Logographical System: Radicals
               </Typography>
               <Typography variant="body1">
-                {userStats?.chineseLogographicSystem.radicalsLearned || 0}/ 100
+                {userStats?.chineseLogographicSystem.radicalsLearned || 0}/
+                {userStats?.chineseLogographicSystem.totalRadicals || 214}
               </Typography>
               <LinearProgress
                 variant="determinate"

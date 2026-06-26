@@ -30,9 +30,7 @@ export function makeDummyRadicalSessions(): RadicalSession {
 
 export function makeDummyRadical(): Radical {
   return {
-    id: "7e28eae1-f854-41e4-87b3-b582354b91ee",
-    mainRepresentation: 0x4eba,
-    otherVars: [0x4eba, 0x4ebb],
+    id: "人",
     pinyin: "rén",
     meaning: "person",
     pronounce: "https://dictionary.writtenchinese.com/sounds/ren2.mp3",

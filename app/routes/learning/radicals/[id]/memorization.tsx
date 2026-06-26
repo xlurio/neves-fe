@@ -33,14 +33,14 @@ export default function RadicalSessionMemorizationRoute() {
         <>
           <Typography variant="h2">
             Radical Session -{" "}
-            {Date.parse(radicalSessionQuery.data!.createdAt).toLocaleString()}
+            {radicalSessionRadicalsQuery.isFetched ??
+              new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
           </Typography>
           <Typography variant="h3">Memorization</Typography>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Simplified Chinese</TableCell>
-                <TableCell>Other variations</TableCell>
                 <TableCell>Pinyin</TableCell>
                 <TableCell>Meaning</TableCell>
                 <TableCell>Pronounciation</TableCell>
@@ -53,17 +53,12 @@ export default function RadicalSessionMemorizationRoute() {
                   {radicalSessionRadicalsQuery.data!.results.map((radical) => (
                     <TableRow key={radical.id}>
                       <TableCell>
-                        {String.fromCodePoint(radical.mainRepresentation)}
-                      </TableCell>
-                      <TableCell>
-                        {radical.otherVars.map((v) => (
-                          <>{String.fromCodePoint(v)} </>
-                        ))}
+                        {radical.id}
                       </TableCell>
                       <TableCell>{radical.pinyin}</TableCell>
                       <TableCell>{radical.meaning}</TableCell>
                       <TableCell>
-                        <audio src={radical.pronounce} />
+                        <audio controls controlsList="play" src={radical.pronounce} />
                       </TableCell>
                       <TableCell>
                         <Button type="button" color="error">
@@ -84,12 +79,14 @@ export default function RadicalSessionMemorizationRoute() {
             </TableBody>
           </Table>
           <Box>
-            {radicalSessionRadicalsQuery.data!.previous ? (
+            {radicalSessionRadicalsQuery.isFetched &&
+            radicalSessionRadicalsQuery.data!.previous ? (
               <Button type="button" onClick={() => setPage(page - 1)}>
                 Prev
               </Button>
             ) : null}
-            {radicalSessionRadicalsQuery.data!.next ? (
+            {radicalSessionRadicalsQuery.isFetched &&
+            radicalSessionRadicalsQuery.data!.next ? (
               <Button type="button" onClick={() => setPage(page + 1)}>
                 Next
               </Button>

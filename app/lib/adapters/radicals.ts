@@ -35,6 +35,15 @@ export async function getRadicalSession(id: UUID): Promise<RadicalSession> {
   return response.data;
 }
 
+export async function postRadicalSessions(): Promise<RadicalSession> {
+  if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
+    return makeDummyRadicalSessions();
+  }
+
+  const response = await api.post<RadicalSession>(`/api/radicals/sessions`);
+  return response.data;
+}
+
 export async function getRadicalSessions({
   page,
 }: GetRadicalSessionsParams): Promise<
