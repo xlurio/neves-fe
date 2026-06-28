@@ -1,20 +1,23 @@
 import {
   isBackendErrorSchema,
   isMissedQuestionErrorSchema,
-  type GetRadicalSessionTestResultResponseSchema,
-  type PaginatedBackendResponse,
-  type RadicalSessionTest,
+  type PracticeSessionTest,
+  type RadicalQuestionType,
   type UUID,
 } from "~/types";
+import { isAxiosError } from "axios";
+import { MissedQuestionError, UnknownBackendError } from "../errors";
+import type {
+  GetPracticeSessionTestResultResponseSchema,
+  PaginatedBackendResponse,
+} from "~/types/adapters";
 import {
+  getRadicalSessionTestResult,
+  getRadicalSessionTests,
   postRadicalSessionTestAnswer,
   postRadicalSessionTestCreate,
   postRadicalSessionTestFinish,
-  getRadicalSessionTests,
-  getRadicalSessionTestResult,
-} from "../adapters";
-import { isAxiosError } from "axios";
-import { MissedQuestionError, UnknownBackendError } from "../errors";
+} from "../adapters/radicals";
 
 /**
  * @throws {MissedQuestionError} Thrown when a question was missed.
@@ -22,7 +25,7 @@ import { MissedQuestionError, UnknownBackendError } from "../errors";
  * response
  */
 export class RadicalSessionTestRepository {
-  public static async create(sessionId: UUID): Promise<RadicalSessionTest> {
+  public static async create(sessionId: UUID): Promise<PracticeSessionTest> {
     return await postRadicalSessionTestCreate(sessionId);
   }
 
@@ -58,7 +61,7 @@ export class RadicalSessionTestRepository {
   public static async list(
     id: UUID,
     page: number = 1,
-  ): Promise<PaginatedBackendResponse<RadicalSessionTest>> {
+  ): Promise<PaginatedBackendResponse<PracticeSessionTest>> {
     return await getRadicalSessionTests({ id, page });
   }
 
@@ -89,9 +92,9 @@ export class RadicalSessionTestRepository {
 
   public static async getResult(
     id: UUID,
-  ): Promise<GetRadicalSessionTestResultResponseSchema> {
+  ): Promise<GetPracticeSessionTestResultResponseSchema<RadicalQuestionType>> {
     try {
-      return await getRadicalSessionTestResult({ id });
+      return await getRadicalSessionTestResult(id);
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         if (isBackendErrorSchema(error.response?.data)) {

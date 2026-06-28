@@ -12,28 +12,23 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
-import { useRadicalSessionQuery } from "~/hooks/useRadicalSessionQuery";
-import { useRadicalSessionTestsQuery } from "~/hooks/useRadicalSessionTestsQuery";
-import { RadicalSessionTestRepository } from "~/lib/services/radicalSessionTests";
-import type { UUID } from "~/types";
-
-interface RadicalSessionPathParams {
-  radicalSessionId: UUID;
-}
+import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
+import { useRadicalSessionTestsQuery } from "~/hooks/radicals/useRadicalSessionTestsQuery";
+import { useCreateRadicalSessionTestMutation } from "~/hooks/radicals/useCreateRadicalSessionTestMutation";
+import type { PracticeSessionPathParams } from "~/types/components";
 
 export default function RadicalSessionRoute() {
-  const params = useParams() as unknown as RadicalSessionPathParams;
+  const params = useParams() as unknown as PracticeSessionPathParams;
   const navigate = useNavigate();
-  const radicalSessionQuery = useRadicalSessionQuery(params.radicalSessionId);
-  const testsQuery = useRadicalSessionTestsQuery(params.radicalSessionId);
+  const radicalSessionQuery = useRadicalSessionQuery(params.sessionId);
+  const testsQuery = useRadicalSessionTestsQuery(params.sessionId);
+  const createTestMutation = useCreateRadicalSessionTestMutation(
+    params.sessionId,
+  );
 
   const handleCreateTest = async () => {
-    const test = await RadicalSessionTestRepository.create(
-      params.radicalSessionId,
-    );
-    navigate(
-      `/practice/radicals/tests/${test.id}`,
-    );
+    const test = await createTestMutation.mutateAsync();
+    navigate(`/practice/radicals/tests/${test.id}`);
   };
 
   return (

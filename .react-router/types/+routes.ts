@@ -49,15 +49,18 @@ type Pages = {
       "id": string;
     };
   };
+  "/practice/sentences": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result";
+    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result" | "/practice/sentences";
   };
-  "routes/auth-layout.tsx": {
-    id: "routes/auth-layout";
+  "layouts/AuthLayout.tsx": {
+    id: "layouts/AuthLayout";
     page: "/login" | "/register";
   };
   "routes/auth/login.tsx": {
@@ -68,9 +71,9 @@ type RouteFiles = {
     id: "routes/auth/register";
     page: "/register";
   };
-  "routes/protected-layout.tsx": {
-    id: "routes/protected-layout";
-    page: "/" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result";
+  "layouts/ProtectedLayout.tsx": {
+    id: "layouts/ProtectedLayout";
+    page: "/" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:radicalSessionId" | "/practice/radicals/:radicalSessionId/memorization" | "/practice/radicals/tests/:testId" | "/practice/radicals/tests/:id/result" | "/practice/sentences";
   };
   "routes/index.tsx": {
     id: "routes/index";
@@ -104,14 +107,18 @@ type RouteFiles = {
     id: "routes/practice/radicals/tests/[id]/result";
     page: "/practice/radicals/tests/:id/result";
   };
+  "routes/practice/sentences.tsx": {
+    id: "routes/practice/sentences";
+    page: "/practice/sentences";
+  };
 };
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
-  "routes/auth-layout": typeof import("./app/routes/auth-layout.tsx");
+  "layouts/AuthLayout": typeof import("./app/layouts/AuthLayout.tsx");
   "routes/auth/login": typeof import("./app/routes/auth/login.tsx");
   "routes/auth/register": typeof import("./app/routes/auth/register.tsx");
-  "routes/protected-layout": typeof import("./app/routes/protected-layout.tsx");
+  "layouts/ProtectedLayout": typeof import("./app/layouts/ProtectedLayout.tsx");
   "routes/index": typeof import("./app/routes/index.tsx");
   "routes/learning/radicals": typeof import("./app/routes/learning/radicals.tsx");
   "routes/learning/frequency": typeof import("./app/routes/learning/frequency.tsx");
@@ -120,4 +127,5 @@ type RouteModules = {
   "routes/practice/radicals/[id]/memorization": typeof import("./app/routes/practice/radicals/[id]/memorization.tsx");
   "routes/practice/radicals/tests/[id]/index": typeof import("./app/routes/practice/radicals/tests/[id]/index.tsx");
   "routes/practice/radicals/tests/[id]/result": typeof import("./app/routes/practice/radicals/tests/[id]/result.tsx");
+  "routes/practice/sentences": typeof import("./app/routes/practice/sentences.tsx");
 };

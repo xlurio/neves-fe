@@ -7,11 +7,11 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  layout("routes/auth-layout.tsx", [
+  layout("layouts/AuthLayout.tsx", [
     route("login", "routes/auth/login.tsx"),
     route("register", "routes/auth/register.tsx"),
   ]),
-  layout("routes/protected-layout.tsx", [
+  layout("layouts/ProtectedLayout.tsx", [
     index("routes/index.tsx"),
     ...prefix("learning", [
       route("radicals", "routes/learning/radicals.tsx"),
@@ -31,6 +31,7 @@ export default [
           "routes/practice/radicals/tests/[id]/result.tsx",
         ),
       ]),
+      route("sentences", "routes/practice/sentences.tsx"),
     ]),
   ]),
 ] satisfies RouteConfig;

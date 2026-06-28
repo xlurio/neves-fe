@@ -1,11 +1,11 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import type { GetRadicalSessionTestQuestionParams } from "~/lib/adapters";
 import { RadicalSessionTestQuestionRepository } from "~/lib/services/radicalSessionTestQuestions";
+import type { GetPracticeSessionTestQuestionParams } from "~/types/adapters";
 
 export function useRadicalSessionTestQuestionQuery({
   id,
   questionNum,
-}: GetRadicalSessionTestQuestionParams) {
+}: GetPracticeSessionTestQuestionParams) {
   return useQuery({
     queryKey: ["radical-session", id, questionNum],
     queryFn: () =>

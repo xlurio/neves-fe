@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { RadicalSessionRepository } from "~/lib/services/radicalsSessions";
+import { RadicalSessionRepository } from "~/lib/services/radicalSessions";
 import type { UUID } from "~/types";
 
 export function useRadicalSessionQuery(id: UUID) {

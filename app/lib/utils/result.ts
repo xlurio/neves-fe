@@ -1,15 +1,15 @@
 import type {
-  RadicalSessionTestResultQuestion,
-  RadicalSessionTestResultQuestionToAudio,
+  PracticeSessionTestResultQuestion,
+  PracticeSessionTestResultQuestionToAudio,
 } from "~/types";
 
 export const ANSWER_ALTERNATIVES = ["a", "b", "c", "d", "e"] as const;
 
-export function hasQuestionAudio(
+export function hasQuestionAudio<QuestionClassType>(
   question:
-    | RadicalSessionTestResultQuestion
-    | RadicalSessionTestResultQuestionToAudio,
-): question is RadicalSessionTestResultQuestionToAudio {
+    | PracticeSessionTestResultQuestion<QuestionClassType>
+    | PracticeSessionTestResultQuestionToAudio<QuestionClassType>,
+): question is PracticeSessionTestResultQuestionToAudio<QuestionClassType> {
   return "audio" in question;
 }
 

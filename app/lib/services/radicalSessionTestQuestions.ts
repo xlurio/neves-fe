@@ -1,13 +1,11 @@
-import {
-  getRadicalSessionTestQuestion,
-  type GetRadicalSessionTestQuestionParams,
-} from "../adapters";
+import type { GetPracticeSessionTestQuestionParams } from "~/types/adapters";
+import { getRadicalSessionTestQuestion } from "../adapters/radicals";
 
 export class RadicalSessionTestQuestionRepository {
   public static async getQuestion({
     id,
     questionNum,
-  }: GetRadicalSessionTestQuestionParams) {
+  }: GetPracticeSessionTestQuestionParams) {
     return getRadicalSessionTestQuestion({ id, questionNum });
   }
 }

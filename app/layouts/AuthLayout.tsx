@@ -4,7 +4,7 @@ import NavBar from "~/components/NavBar";
 export default function AuthLayout() {
   return (
     <>
-      <NavBar showLogout={false} />
+      <NavBar doShowLogout={false} />
       <Outlet />
     </>
   );

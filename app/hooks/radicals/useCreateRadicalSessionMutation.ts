@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { RadicalSessionRepository } from "~/lib/services/radicalsSessions";
+import { RadicalSessionRepository } from "~/lib/services/radicalSessions";
 
 export function useCreateRadicalSessionMutation() {
   return useMutation({

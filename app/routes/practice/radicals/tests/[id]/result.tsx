@@ -9,15 +9,15 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import FormErrorWrapper from "~/components/FormErrorWrapper";
 import useFormErrorWrapper from "~/hooks/useFormErrorWrapper";
-import { useRadicalSessionQuery } from "~/hooks/useRadicalSessionQuery";
-import { useRadicalSessionTestResultQuery } from "~/hooks/useRadicalSessionTestResultQuery";
+import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
+import { useRadicalSessionTestResultQuery } from "~/hooks/radicals/useRadicalSessionTestResultQuery";
 import { BackendError } from "~/lib/errors";
 import {
   ANSWER_ALTERNATIVES,
   formatAlternativeStatus,
   hasQuestionAudio,
 } from "~/lib/utils/result";
-import type { GetRadicalSessionTestResultResponseSchema, UUID } from "~/types";
+import type { UUID } from "~/types";
 
 interface TestResultPathParams {
   id: UUID;
@@ -29,7 +29,7 @@ export default function RadicalSessionTestResultRoute() {
   const { setFormError, resetFormError } = errCtrl;
   const testResultQuery = useRadicalSessionTestResultQuery(params.id);
   const radicalSessionQuery = useRadicalSessionQuery(
-    testResultQuery.data?.radicalsSessionId || "",
+    testResultQuery.data?.sessionId || "",
   );
 
   useEffect(() => {
@@ -57,8 +57,7 @@ export default function RadicalSessionTestResultRoute() {
     testResultQuery.isError,
   ]);
 
-  const resultData: GetRadicalSessionTestResultResponseSchema | undefined =
-    testResultQuery.data;
+  const resultData = testResultQuery.data;
 
   return (
     <Box>

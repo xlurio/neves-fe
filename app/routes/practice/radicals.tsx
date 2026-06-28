@@ -10,8 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useCreateRadicalSessionMutation } from "~/hooks/useCreateRadicalSessionMutation";
-import { useRadicalSessionsQuery } from "~/hooks/useRadicalSessionsQuery";
+import { useCreateRadicalSessionMutation } from "~/hooks/radicals/useCreateRadicalSessionMutation";
+import { useRadicalSessionsQuery } from "~/hooks/radicals/useRadicalSessionsQuery";
 
 export default function RadicalsRoute() {
   const [page, setPage] = useState(1);

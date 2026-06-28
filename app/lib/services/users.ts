@@ -1,11 +1,11 @@
 import { isAxiosError } from "axios";
-import { postAuthenticate, postUserCreate } from "../adapters";
 import {
   InvalidCredentialsError,
   UnknownBackendError,
   ValidationError,
 } from "../errors";
 import type { User } from "~/types";
+import { postAuthenticate, postUserCreate } from "../adapters/auth";
 
 interface AuthData {
   username: string;

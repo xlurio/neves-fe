@@ -10,15 +10,16 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import FormErrorWrapper from "~/components/FormErrorWrapper";
 import useFormErrorWrapper from "~/hooks/useFormErrorWrapper";
-import { useRadicalSessionQuery } from "~/hooks/useRadicalSessionQuery";
-import { useRadicalSessionTestFinishMutation } from "~/hooks/useRadicalSessionTestFinishMutation";
-import { useRadicalSessionTestQuestionQuery } from "~/hooks/useRadicalSessionTestQuery";
+import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
+import { useRadicalSessionTestFinishMutation } from "~/hooks/radicals/useRadicalSessionTestFinishMutation";
+import { useRadicalSessionTestQuestionQuery } from "~/hooks/radicals/useRadicalSessionTestQuestionQuery";
 import { RadicalSessionTestRepository } from "~/lib/services/radicalSessionTests";
 import { BackendError } from "~/lib/errors";
-import { isRadicalSessionTestQuestionToAudio, type UUID } from "~/types";
+import { type UUID } from "~/types";
+import { isPracticeSessionTestQuestionToAudio } from "~/types/adapters";
 
 interface RadicalSessionPathParams {
   testId: UUID;
@@ -33,7 +34,7 @@ export default function RadicalSessionTestRoute() {
     questionNum: questionNum,
   });
   const radicalSessionQuery = useRadicalSessionQuery(
-    radicalSessionTestQuestionQuery.data?.radicalsSessionId || "",
+    radicalSessionTestQuestionQuery.data?.sessionId || "",
   );
   const [isOpen, setOpen] = useState(false);
   const errCtrl = useFormErrorWrapper();
@@ -69,7 +70,7 @@ export default function RadicalSessionTestRoute() {
         answer,
       );
 
-      radicalSessionTestQuestionQuery.data?.next &&
+      if (radicalSessionTestQuestionQuery.data?.next)
         setQuestionNum(questionNum + 1);
     } catch (error: unknown) {
       if (error instanceof BackendError) {
@@ -110,8 +111,8 @@ export default function RadicalSessionTestRoute() {
                   <Paper>
                     {radicalSessionTestQuestionQuery.data!.payload.question}
                   </Paper>
-                  {isRadicalSessionTestQuestionToAudio(
-                    radicalSessionTestQuestionQuery.data!,
+                  {isPracticeSessionTestQuestionToAudio(
+                    radicalSessionTestQuestionQuery.data!.payload,
                   ) ? (
                     <Paper>
                       <audio

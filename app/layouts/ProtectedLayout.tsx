@@ -20,7 +20,7 @@ export default function ProtectedLayout() {
 
   return (
     <>
-      <NavBar showLogout />
+      <NavBar doShowLogout />
       <Outlet />
     </>
   );

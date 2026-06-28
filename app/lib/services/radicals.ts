@@ -1,9 +1,12 @@
-import type { PaginatedBackendResponse, Radical, UUID } from "~/types";
+import type { Radical, UUID } from "~/types";
+import type {
+  PaginatedBackendResponse,
+  PaginatedForIdEndpointParams,
+} from "~/types/adapters";
 import {
   getRadicalSessionRadicals,
   postRadicalSessionsRadical,
-  type GetRadicalSessionRadicalsParams,
-} from "../adapters";
+} from "../adapters/radicals";
 
 export class RadicalRepository {
   public static async createForSession(id: UUID) {
@@ -13,9 +16,7 @@ export class RadicalRepository {
   public static async filterBySession({
     id,
     page,
-  }: GetRadicalSessionRadicalsParams): Promise<
-    PaginatedBackendResponse<Radical>
-  > {
+  }: PaginatedForIdEndpointParams): Promise<PaginatedBackendResponse<Radical>> {
     return getRadicalSessionRadicals({
       id,
       page,
