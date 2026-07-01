@@ -57,7 +57,7 @@ export default function IndexRoute() {
               </Tooltip>
             )}
             <Paper>
-              <Typography variant="h2">In Construction</Typography>
+              <Typography variant="h3">In Construction</Typography>
             </Paper>
           </Stack>
         </>

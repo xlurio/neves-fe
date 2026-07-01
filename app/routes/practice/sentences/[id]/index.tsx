@@ -16,22 +16,15 @@ import type { UUID } from "~/types";
 import { useSentenceSessionQuery } from "~/hooks/sentences/useSentenceSessionQuery";
 import { useSentenceSessionAssessmentsQuery } from "~/hooks/sentences/useSentenceSessionAssessmentsQuery";
 import { useCreateSentenceSessionAssessmentMutation } from "~/hooks/sentences/useCreateSentenceSessionAssessmentMutation";
-
-interface SentenceSessionPathParams {
-  sentenceSessionId: UUID;
-}
+import type { PracticeSessionPathParams } from "~/types/components";
 
 export default function SentenceSessionRoute() {
-  const params = useParams() as unknown as SentenceSessionPathParams;
+  const params = useParams() as unknown as PracticeSessionPathParams;
   const navigate = useNavigate();
-  const sentenceSessionQuery = useSentenceSessionQuery(
-    params.sentenceSessionId,
-  );
-  const assessmentsQuery = useSentenceSessionAssessmentsQuery(
-    params.sentenceSessionId,
-  );
+  const sentenceSessionQuery = useSentenceSessionQuery(params.sessionId);
+  const assessmentsQuery = useSentenceSessionAssessmentsQuery(params.sessionId);
   const createAssessmentMutation = useCreateSentenceSessionAssessmentMutation(
-    params.sentenceSessionId,
+    params.sessionId,
   );
 
   const handleCreateAssessment = async () => {

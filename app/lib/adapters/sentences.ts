@@ -53,8 +53,7 @@ export async function getSentenceSessionSentence({
   sentenceNum,
 }: GetSentenceSessionSentenceParams) {
   const response = await api.get<GetSentenceSessionSentenceResponseSchema>(
-    `/api/sentences/sessions/${id}/sentence`,
-    { params: { sentenceNum: sentenceNum } },
+    `/api/sentences/sessions/${id}/sentences/${sentenceNum}`,
   );
   return response.data;
 }
