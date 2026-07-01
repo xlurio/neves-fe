@@ -117,9 +117,10 @@ export default function RadicalSessionAssessmentRoute() {
                         .question
                     }
                   </Paper>
-                  {isPracticeSessionAssessmentQuestionToAudio(
-                    radicalSessionAssessmentQuestionQuery.data!.payload,
-                  ) ? (
+                  {radicalSessionAssessmentQuestionQuery.data!.payload.type ===
+                    "AUDIO-TO-LOGOGRAM" &&
+                  "audio" in
+                    radicalSessionAssessmentQuestionQuery.data!.payload ? (
                     <Paper>
                       <audio
                         controls

@@ -9,14 +9,14 @@ import Typography from "@mui/material/Typography";
 import { useUserStatisticsQuery } from "~/hooks/useUserStatisticsQuery";
 import type { UserStatistics } from "~/types";
 
-interface PhrasesPaperParams {
+interface SentencesPaperParams {
   userStats: UserStatistics;
 }
 
-function PhrasesPaper({ userStats }: PhrasesPaperParams) {
+function SentencesPaper({ userStats }: SentencesPaperParams) {
   return (
     <Paper>
-      <Typography variant="h3">Phrases</Typography>
+      <Typography variant="h3">Sentences</Typography>
       <LinearProgress
         variant="determinate"
         value={userStats.sentences.progress || 0}
@@ -49,11 +49,11 @@ export default function IndexRoute() {
             </Link>
             {userStats!.sentences.isUnlocked ? (
               <Link href="/practice/sentences">
-                <PhrasesPaper userStats={userStats!} />
+                <SentencesPaper userStats={userStats!} />
               </Link>
             ) : (
               <Tooltip title="Learn more radicals to unlock">
-                <PhrasesPaper userStats={userStats!} />
+                <SentencesPaper userStats={userStats!} />
               </Tooltip>
             )}
             <Paper>
