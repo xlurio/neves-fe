@@ -31,33 +31,36 @@ export default function IndexRoute() {
 
   return (
     <Box>
-      <Typography variant="h2">Home</Typography>
-      <Link href="/learning/frequency">How often should I study?</Link>
       {!isPending ? (
-        <Stack>
-          <Link href="/practice/radicals">
-            <Paper>
-              <Typography variant="h3">Radicals</Typography>
-              <LinearProgress
-                variant="determinate"
-                value={userStats!.radicals.progress || 0}
-                aria-label="Radicals learned"
-              />
-            </Paper>
-          </Link>
-          {userStats!.sentences.isUnlocked ? (
-            <Link href="/practice/sentences">
-              <PhrasesPaper userStats={userStats!} />
+        <>
+          <Typography variant="h2">{userStats!.username}</Typography>
+          <Link href="/learning/frequency">How often should I study?</Link>
+
+          <Stack>
+            <Link href="/practice/radicals">
+              <Paper>
+                <Typography variant="h3">Radicals</Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={userStats!.radicals.progress || 0}
+                  aria-label="Radicals learned"
+                />
+              </Paper>
             </Link>
-          ) : (
-            <Tooltip title="Learn more radicals to unlock">
-              <PhrasesPaper userStats={userStats!} />
-            </Tooltip>
-          )}
-          <Paper>
-            <Typography variant="h2">In Construction</Typography>
-          </Paper>
-        </Stack>
+            {userStats!.sentences.isUnlocked ? (
+              <Link href="/practice/sentences">
+                <PhrasesPaper userStats={userStats!} />
+              </Link>
+            ) : (
+              <Tooltip title="Learn more radicals to unlock">
+                <PhrasesPaper userStats={userStats!} />
+              </Tooltip>
+            )}
+            <Paper>
+              <Typography variant="h2">In Construction</Typography>
+            </Paper>
+          </Stack>
+        </>
       ) : (
         <Skeleton />
       )}

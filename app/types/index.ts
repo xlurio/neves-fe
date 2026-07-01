@@ -50,6 +50,7 @@ export interface User {
 }
 
 export interface UserStatistics {
+  username: string;
   radicals: {
     progress: number;
   };
