@@ -13,22 +13,23 @@ import Button from "@mui/material/Button";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
-import { useRadicalSessionTestsQuery } from "~/hooks/radicals/useRadicalSessionTestsQuery";
-import { useCreateRadicalSessionTestMutation } from "~/hooks/radicals/useCreateRadicalSessionTestMutation";
+import { useRadicalSessionAssessmentsQuery } from "~/hooks/radicals/useRadicalSessionAssessmentsQuery";
+import { useCreateRadicalSessionAssessmentMutation } from "~/hooks/radicals/useCreateRadicalSessionAssessmentMutation";
 import type { PracticeSessionPathParams } from "~/types/components";
 
 export default function RadicalSessionRoute() {
   const params = useParams() as unknown as PracticeSessionPathParams;
   const navigate = useNavigate();
   const radicalSessionQuery = useRadicalSessionQuery(params.sessionId);
-  const testsQuery = useRadicalSessionTestsQuery(params.sessionId);
-  const createTestMutation = useCreateRadicalSessionTestMutation(
+  const assessmentsQuery = useRadicalSessionAssessmentsQuery(params.sessionId);
+
+  const createAssessmentMutation = useCreateRadicalSessionAssessmentMutation(
     params.sessionId,
   );
 
-  const handleCreateTest = async () => {
-    const test = await createTestMutation.mutateAsync();
-    navigate(`/practice/radicals/tests/${test.id}`);
+  const handleCreateAssessment = async () => {
+    const assessment = await createAssessmentMutation.mutateAsync();
+    navigate(`/practice/radicals/assessments/${assessment.id}`);
   };
 
   return (
@@ -51,10 +52,10 @@ export default function RadicalSessionRoute() {
               }
             </Paper>
             <Paper>
-              <Typography variant="h3">Test</Typography>
+              <Typography variant="h3">Assessment</Typography>
               {
-                <Button type="button" onClick={handleCreateTest}>
-                  New test
+                <Button type="button" onClick={handleCreateAssessment}>
+                  New assessment
                 </Button>
               }
               <Table>
@@ -66,16 +67,16 @@ export default function RadicalSessionRoute() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {testsQuery.isFetched ? (
-                    testsQuery.data?.results.map((test) => (
-                      <TableRow key={test.id}>
+                  {assessmentsQuery.isFetched ? (
+                    assessmentsQuery.data?.results.map((assessment) => (
+                      <TableRow key={assessment.id}>
                         <TableCell>
-                          {new Date(test.finishedAt).toLocaleString()}
+                          {new Date(assessment.finishedAt).toLocaleString()}
                         </TableCell>
-                        <TableCell>{test.score}/100</TableCell>
+                        <TableCell>{assessment.score}/100</TableCell>
                         <TableCell>
                           <Link
-                            href={`/practice/radicals/tests/${test.id}/result`}
+                            href={`/practice/radicals/assessments/${assessment.id}/result`}
                           >
                             Check result
                           </Link>

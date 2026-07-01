@@ -1,10 +1,10 @@
 import type {
-  AnswerPracticeSessionTestQuestionRequestSchema,
+  AnswerPracticeSessionAssessmentQuestionRequestSchema,
   PaginatedEndpointParams,
   PaginatedForIdEndpointParams,
-  GetPracticeSessionTestQuestionParams,
-  GetPracticeSessionTestResultResponseSchema,
-  GetPracticeSessionTestQuestionResponseSchema,
+  GetPracticeSessionAssessmentQuestionParams,
+  GetPracticeSessionAssessmentResultResponseSchema,
+  GetPracticeSessionAssessmentQuestionResponseSchema,
   PaginatedBackendResponse,
   GetSentenceSessionSentenceResponseSchema,
   GetSentenceSessionSentenceParams,
@@ -15,7 +15,7 @@ import type {
 } from "~/types/adapters";
 import { api } from "../api";
 import type {
-  PracticeSessionTest,
+  PracticeSessionAssessment,
   SentencePracticeSession,
   SentenceQuestionType,
   UUID,
@@ -84,59 +84,64 @@ export async function getSentenceSessionWordLogograms({
   return response.data;
 }
 
-export async function getSentenceSessionTests({
+export async function getSentenceSessionAssessments({
   id,
   page,
 }: PaginatedForIdEndpointParams): Promise<
-  PaginatedBackendResponse<PracticeSessionTest>
+  PaginatedBackendResponse<PracticeSessionAssessment>
 > {
-  const response = await api.get<PaginatedBackendResponse<PracticeSessionTest>>(
-    `/api/sentences/sessions/${id}/tests`,
-    { params: { page } },
-  );
+  const response = await api.get<
+    PaginatedBackendResponse<PracticeSessionAssessment>
+  >(`/api/sentences/sessions/${id}/assessments`, { params: { page } });
   return response.data;
 }
 
-export async function postSentenceSessionTestCreate(
+export async function postSentenceSessionAssessmentCreate(
   sessionId: UUID,
-): Promise<PracticeSessionTest> {
-  const response = await api.post<PracticeSessionTest>(
-    `/api/sentences/sessions/${sessionId}/tests`,
+): Promise<PracticeSessionAssessment> {
+  const response = await api.post<PracticeSessionAssessment>(
+    `/api/sentences/sessions/${sessionId}/assessments`,
   );
   return response.data;
 }
 
-export async function getSentenceSessionTestQuestion({
+export async function getSentenceSessionAssessmentQuestion({
   id,
   questionNum,
-}: GetPracticeSessionTestQuestionParams): Promise<GetPracticeSessionTestQuestionResponseSchema> {
-  const response = await api.get<GetPracticeSessionTestQuestionResponseSchema>(
-    `/api/sentences/test/${id}/question/${questionNum}`,
-  );
+}: GetPracticeSessionAssessmentQuestionParams): Promise<GetPracticeSessionAssessmentQuestionResponseSchema> {
+  const response =
+    await api.get<GetPracticeSessionAssessmentQuestionResponseSchema>(
+      `/api/sentences/assessment/${id}/question/${questionNum}`,
+    );
   return response.data;
 }
 
-export async function postSentenceSessionTestAnswer({
+export async function postSentenceSessionAssessmentAnswer({
   id,
   questionNum,
   answer,
-}: AnswerPracticeSessionTestQuestionRequestSchema) {
-  await api.post(`/api/sentences/test/${id}/answer`, { questionNum, answer });
+}: AnswerPracticeSessionAssessmentQuestionRequestSchema) {
+  await api.post(`/api/sentences/assessment/${id}/answer`, {
+    questionNum,
+    answer,
+  });
 }
 
-export async function postSentenceSessionTestFinish(id: UUID) {
+export async function postSentenceSessionAssessmentFinish(id: UUID) {
   if (import.meta.env.VITE_MOCK_THIRD_PARTIES) {
     return;
   }
 
-  await api.post(`/api/sentences/test/${id}/finish`);
+  await api.post(`/api/sentences/assessment/${id}/finish`);
 }
 
-export async function getSentenceSessionTestResult(
+export async function getSentenceSessionAssessmentResult(
   id: UUID,
-): Promise<GetPracticeSessionTestResultResponseSchema<SentenceQuestionType>> {
+): Promise<
+  GetPracticeSessionAssessmentResultResponseSchema<SentenceQuestionType>
+> {
   const response = await api.get<
-    GetPracticeSessionTestResultResponseSchema<SentenceQuestionType>
-  >(`/api/sentences/sessions/tests/${id}/result`);
+    GetPracticeSessionAssessmentResultResponseSchema<SentenceQuestionType>
+  >(`/api/sentences/sessions/assessments/${id}/result`);
   return response.data;
 }

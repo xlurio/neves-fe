@@ -74,7 +74,7 @@ export interface SentencePracticeSession extends PracticeSession {
   numOfSentenceCls: number;
 }
 
-export interface PracticeSessionTest {
+export interface PracticeSessionAssessment {
   id: UUID;
   finishedAt: ISO8601;
   score: number;
@@ -90,67 +90,71 @@ export interface Radical {
 export interface Sentence {
   id: number;
   value: string;
+  meaning: string;
+  pronounce: URL;
 }
 
 type QuestionAnswer = "a" | "b" | "c" | "d" | "e";
 
-export interface PracticeSessionTestQuestionTextAlternative {
+export interface PracticeSessionAssessmentQuestionTextAlternative {
   type: "TEXT";
   payload: string;
 }
 
-export interface PracticeSessionTestQuestionAudioAlternative {
+export interface PracticeSessionAssessmentQuestionAudioAlternative {
   type: "AUDIO";
   payload: string;
 }
 
-type BaseRadicalSessionTestQuestionAlternative =
-  | PracticeSessionTestQuestionTextAlternative
-  | PracticeSessionTestQuestionAudioAlternative;
+type BaseRadicalSessionAssessmentQuestionAlternative =
+  | PracticeSessionAssessmentQuestionTextAlternative
+  | PracticeSessionAssessmentQuestionAudioAlternative;
 
-interface BasePracticeSessionTestQuestion<QuestionClassType> {
+interface BasePracticeSessionAssessmentQuestion<QuestionClassType> {
   type: QuestionClassType;
   question: string;
-  alternatives: BaseRadicalSessionTestQuestionAlternative[];
+  alternatives: BaseRadicalSessionAssessmentQuestionAlternative[];
 }
 
-export interface BasePracticeSessionTestUnansweredQuestion<
+export interface BasePracticeSessionAssessmentUnansweredQuestion<
   QuestionClassType,
-> extends BasePracticeSessionTestQuestion<QuestionClassType> {
+> extends BasePracticeSessionAssessmentQuestion<QuestionClassType> {
   currAnswer: QuestionAnswer | null;
 }
 
-export interface PracticeSessionTestQuestionToAudioMixin {
+export interface PracticeSessionAssessmentQuestionToAudioMixin {
   audio: URL;
 }
 
-export interface PracticeSessionTestQuestionToAudio<QuestionClassType>
+export interface PracticeSessionAssessmentQuestionToAudio<QuestionClassType>
   extends
-    BasePracticeSessionTestUnansweredQuestion<QuestionClassType>,
-    PracticeSessionTestQuestionToAudioMixin {}
+    BasePracticeSessionAssessmentUnansweredQuestion<QuestionClassType>,
+    PracticeSessionAssessmentQuestionToAudioMixin {}
 
-export interface RadicalSessionTestQuestionFromAudio<
+export interface RadicalSessionAssessmentQuestionFromAudio<
   QuestionClassType,
-> extends BasePracticeSessionTestUnansweredQuestion<QuestionClassType> {
-  alternatives: PracticeSessionTestQuestionAudioAlternative[];
+> extends BasePracticeSessionAssessmentUnansweredQuestion<QuestionClassType> {
+  alternatives: PracticeSessionAssessmentQuestionAudioAlternative[];
 }
 
-export type RadicalSessionTestQuestion<QuestionClassType> =
-  | BasePracticeSessionTestUnansweredQuestion<QuestionClassType>
-  | PracticeSessionTestQuestionToAudio<QuestionClassType>
-  | RadicalSessionTestQuestionFromAudio<QuestionClassType>;
+export type RadicalSessionAssessmentQuestion<QuestionClassType> =
+  | BasePracticeSessionAssessmentUnansweredQuestion<QuestionClassType>
+  | PracticeSessionAssessmentQuestionToAudio<QuestionClassType>
+  | RadicalSessionAssessmentQuestionFromAudio<QuestionClassType>;
 
-export interface PracticeSessionTestResultQuestion<
+export interface PracticeSessionAssessmentResultQuestion<
   QuestionClassType,
-> extends BasePracticeSessionTestQuestion<QuestionClassType> {
+> extends BasePracticeSessionAssessmentQuestion<QuestionClassType> {
   currAnswer: QuestionAnswer;
   expectedAnswer: QuestionAnswer;
 }
 
-export interface PracticeSessionTestResultQuestionToAudio<QuestionClassType>
+export interface PracticeSessionAssessmentResultQuestionToAudio<
+  QuestionClassType,
+>
   extends
-    PracticeSessionTestResultQuestion<QuestionClassType>,
-    PracticeSessionTestQuestionToAudioMixin {}
+    PracticeSessionAssessmentResultQuestion<QuestionClassType>,
+    PracticeSessionAssessmentQuestionToAudioMixin {}
 
 export type RadicalQuestionType =
   | "AUDIO-TO-LOGOGRAM"

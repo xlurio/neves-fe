@@ -1,32 +1,34 @@
 import {
   isBackendErrorSchema,
   isMissedQuestionErrorSchema,
-  type PracticeSessionTest,
-  type SentenceQuestionType,
+  type PracticeSessionAssessment,
+  type RadicalQuestionType,
   type UUID,
 } from "~/types";
 import { isAxiosError } from "axios";
 import { MissedQuestionError, UnknownBackendError } from "../errors";
 import type {
-  GetPracticeSessionTestResultResponseSchema,
+  GetPracticeSessionAssessmentResultResponseSchema,
   PaginatedBackendResponse,
 } from "~/types/adapters";
 import {
-  getSentenceSessionTestResult,
-  getSentenceSessionTests,
-  postSentenceSessionTestAnswer,
-  postSentenceSessionTestCreate,
-  postSentenceSessionTestFinish,
-} from "../adapters/sentences";
+  getRadicalSessionAssessmentResult,
+  getRadicalSessionAssessments,
+  postRadicalSessionAssessmentAnswer,
+  postRadicalSessionAssessmentCreate,
+  postRadicalSessionAssessmentFinish,
+} from "../adapters/radicals";
 
 /**
  * @throws {MissedQuestionError} Thrown when a question was missed.
  * @throws {UnknownBackendError} Thrown when a generic error came from the backend
  * response
  */
-export class SentenceSessionTestRepository {
-  public static async create(sessionId: UUID): Promise<PracticeSessionTest> {
-    return await postSentenceSessionTestCreate(sessionId);
+export class RadicalSessionAssessmentRepository {
+  public static async create(
+    sessionId: UUID,
+  ): Promise<PracticeSessionAssessment> {
+    return await postRadicalSessionAssessmentCreate(sessionId);
   }
 
   public static async answer(
@@ -35,7 +37,7 @@ export class SentenceSessionTestRepository {
     answer: "a" | "b" | "c" | "d" | "e",
   ) {
     try {
-      await postSentenceSessionTestAnswer({ id, questionNum, answer });
+      await postRadicalSessionAssessmentAnswer({ id, questionNum, answer });
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         if (isBackendErrorSchema(error.response?.data)) {
@@ -61,13 +63,13 @@ export class SentenceSessionTestRepository {
   public static async list(
     id: UUID,
     page: number = 1,
-  ): Promise<PaginatedBackendResponse<PracticeSessionTest>> {
-    return await getSentenceSessionTests({ id, page });
+  ): Promise<PaginatedBackendResponse<PracticeSessionAssessment>> {
+    return await getRadicalSessionAssessments({ id, page });
   }
 
   public static async finish(id: UUID) {
     try {
-      return await postSentenceSessionTestFinish(id);
+      return await postRadicalSessionAssessmentFinish(id);
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         if (isBackendErrorSchema(error.response?.data)) {
@@ -92,9 +94,11 @@ export class SentenceSessionTestRepository {
 
   public static async getResult(
     id: UUID,
-  ): Promise<GetPracticeSessionTestResultResponseSchema<SentenceQuestionType>> {
+  ): Promise<
+    GetPracticeSessionAssessmentResultResponseSchema<RadicalQuestionType>
+  > {
     try {
-      return await getSentenceSessionTestResult(id);
+      return await getRadicalSessionAssessmentResult(id);
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         if (isBackendErrorSchema(error.response?.data)) {

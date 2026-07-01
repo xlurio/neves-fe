@@ -9,8 +9,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import FormErrorWrapper from "~/components/FormErrorWrapper";
 import useFormErrorWrapper from "~/hooks/useFormErrorWrapper";
-import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
-import { useRadicalSessionTestResultQuery } from "~/hooks/radicals/useRadicalSessionTestResultQuery";
+import { useSentenceSessionQuery } from "~/hooks/sentences/useSentenceSessionQuery";
 import { BackendError } from "~/lib/errors";
 import {
   ANSWER_ALTERNATIVES,
@@ -18,59 +17,62 @@ import {
   hasQuestionAudio,
 } from "~/lib/utils/result";
 import type { UUID } from "~/types";
+import { useSentenceSessionAssessmentResultQuery } from "~/hooks/sentences/useSentenceSessionAssessmentResultQuery";
 
-interface TestResultPathParams {
+interface AssessmentResultPathParams {
   id: UUID;
 }
 
-export default function RadicalSessionTestResultRoute() {
-  const params = useParams() as unknown as TestResultPathParams;
+export default function SentenceSessionAssessmentResultRoute() {
+  const params = useParams() as unknown as AssessmentResultPathParams;
   const errCtrl = useFormErrorWrapper();
   const { setFormError, resetFormError } = errCtrl;
-  const testResultQuery = useRadicalSessionTestResultQuery(params.id);
-  const radicalSessionQuery = useRadicalSessionQuery(
-    testResultQuery.data?.sessionId || "",
+  const assessmentResultQuery = useSentenceSessionAssessmentResultQuery(
+    params.id,
+  );
+  const sentenceSessionQuery = useSentenceSessionQuery(
+    assessmentResultQuery.data?.sessionId || "",
   );
 
   useEffect(() => {
-    if (!testResultQuery.isError) {
+    if (!assessmentResultQuery.isError) {
       resetFormError();
       return;
     }
 
-    if (testResultQuery.error instanceof BackendError) {
+    if (assessmentResultQuery.error instanceof BackendError) {
       setFormError(
-        testResultQuery.error.message,
-        testResultQuery.error.details,
+        assessmentResultQuery.error.message,
+        assessmentResultQuery.error.details,
       );
       return;
     }
 
     setFormError(
-      "Could not load test result",
+      "Could not load assessment result",
       "Please refresh this page and try again.",
     );
   }, [
     resetFormError,
     setFormError,
-    testResultQuery.error,
-    testResultQuery.isError,
+    assessmentResultQuery.error,
+    assessmentResultQuery.isError,
   ]);
 
-  const resultData = testResultQuery.data;
+  const resultData = assessmentResultQuery.data;
 
   return (
     <Box>
       <Typography variant="h2">
-        Radical Session -{" "}
-        {radicalSessionQuery.isFetched ? (
-          new Date(radicalSessionQuery.data!.createdAt).toLocaleString()
+        Sentence Session -{" "}
+        {sentenceSessionQuery.isFetched ? (
+          new Date(sentenceSessionQuery.data!.createdAt).toLocaleString()
         ) : (
           <Skeleton />
         )}
       </Typography>
-      <Typography variant="h3">Test</Typography>
-      {testResultQuery.isPending ? (
+      <Typography variant="h3">Assessment</Typography>
+      {assessmentResultQuery.isPending ? (
         <Skeleton height={320} />
       ) : (
         <FormErrorWrapper formErrorState={errCtrl.formErrorState}>
@@ -159,7 +161,7 @@ export default function RadicalSessionTestResultRoute() {
             ) : (
               <Paper sx={{ p: 2 }}>
                 <Typography>
-                  No questions were returned for this test.
+                  No questions were returned for this assessment.
                 </Typography>
               </Paper>
             )}

@@ -2,17 +2,17 @@ import { api } from "../api";
 import type {
   Radical,
   RadicalPracticeSession,
-  PracticeSessionTest,
+  PracticeSessionAssessment,
   UUID,
   RadicalQuestionType,
 } from "~/types";
 import type {
   PaginatedEndpointParams,
-  GetPracticeSessionTestQuestionParams,
-  AnswerPracticeSessionTestQuestionRequestSchema,
+  GetPracticeSessionAssessmentQuestionParams,
+  AnswerPracticeSessionAssessmentQuestionRequestSchema,
   PaginatedForIdEndpointParams,
-  GetPracticeSessionTestQuestionResponseSchema,
-  GetPracticeSessionTestResultResponseSchema,
+  GetPracticeSessionAssessmentQuestionResponseSchema,
+  GetPracticeSessionAssessmentResultResponseSchema,
   PaginatedBackendResponse,
 } from "../../types/adapters";
 
@@ -61,55 +61,60 @@ export async function postRadicalSessionsRadical(id: UUID) {
   return response.data;
 }
 
-export async function getRadicalSessionTests({
+export async function getRadicalSessionAssessments({
   id,
   page,
 }: PaginatedForIdEndpointParams): Promise<
-  PaginatedBackendResponse<PracticeSessionTest>
+  PaginatedBackendResponse<PracticeSessionAssessment>
 > {
-  const response = await api.get<PaginatedBackendResponse<PracticeSessionTest>>(
-    `/api/radicals/sessions/${id}/tests`,
-    { params: { page } },
-  );
+  const response = await api.get<
+    PaginatedBackendResponse<PracticeSessionAssessment>
+  >(`/api/radicals/sessions/${id}/assessments`, { params: { page } });
   return response.data;
 }
 
-export async function postRadicalSessionTestCreate(
+export async function postRadicalSessionAssessmentCreate(
   sessionId: UUID,
-): Promise<PracticeSessionTest> {
-  const response = await api.post<PracticeSessionTest>(
-    `/api/radicals/sessions/${sessionId}/tests`,
+): Promise<PracticeSessionAssessment> {
+  const response = await api.post<PracticeSessionAssessment>(
+    `/api/radicals/sessions/${sessionId}/assessments`,
   );
   return response.data;
 }
 
-export async function getRadicalSessionTestQuestion({
+export async function getRadicalSessionAssessmentQuestion({
   id,
   questionNum,
-}: GetPracticeSessionTestQuestionParams): Promise<GetPracticeSessionTestQuestionResponseSchema> {
-  const response = await api.get<GetPracticeSessionTestQuestionResponseSchema>(
-    `/api/radicals/test/${id}/question/${questionNum}`,
-  );
+}: GetPracticeSessionAssessmentQuestionParams): Promise<GetPracticeSessionAssessmentQuestionResponseSchema> {
+  const response =
+    await api.get<GetPracticeSessionAssessmentQuestionResponseSchema>(
+      `/api/radicals/assessment/${id}/question/${questionNum}`,
+    );
   return response.data;
 }
 
-export async function postRadicalSessionTestAnswer({
+export async function postRadicalSessionAssessmentAnswer({
   id,
   questionNum,
   answer,
-}: AnswerPracticeSessionTestQuestionRequestSchema) {
-  await api.post(`/api/radicals/test/${id}/answer`, { questionNum, answer });
+}: AnswerPracticeSessionAssessmentQuestionRequestSchema) {
+  await api.post(`/api/radicals/assessment/${id}/answer`, {
+    questionNum,
+    answer,
+  });
 }
 
-export async function postRadicalSessionTestFinish(id: UUID) {
-  await api.post(`/api/radicals/test/${id}/finish`);
+export async function postRadicalSessionAssessmentFinish(id: UUID) {
+  await api.post(`/api/radicals/assessment/${id}/finish`);
 }
 
-export async function getRadicalSessionTestResult(
+export async function getRadicalSessionAssessmentResult(
   id: UUID,
-): Promise<GetPracticeSessionTestResultResponseSchema<RadicalQuestionType>> {
+): Promise<
+  GetPracticeSessionAssessmentResultResponseSchema<RadicalQuestionType>
+> {
   const response = await api.get<
-    GetPracticeSessionTestResultResponseSchema<RadicalQuestionType>
-  >(`/api/radicals/sessions/tests/${id}/result`);
+    GetPracticeSessionAssessmentResultResponseSchema<RadicalQuestionType>
+  >(`/api/radicals/sessions/assessments/${id}/result`);
   return response.data;
 }

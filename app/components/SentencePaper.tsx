@@ -163,6 +163,14 @@ export default function SentencePaper() {
           <Typography variant="body1">
             {sentencesQuery.data!.payload.value}
           </Typography>
+          <Typography variant="h4">Meaning</Typography>
+          <Typography variant="body1">
+            {sentencesQuery.data!.payload.meaning}
+          </Typography>
+          <Typography variant="h4">Pronounce</Typography>
+          <Typography variant="body1">
+            <audio controls src={sentencesQuery.data!.payload.pronounce} />
+          </Typography>
           <WordPaper sentenceNum={sentenceNum} />
           {sentencesQuery.data!.previous ? (
             <Button

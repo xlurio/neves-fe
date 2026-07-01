@@ -13,41 +13,42 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import FormErrorWrapper from "~/components/FormErrorWrapper";
 import useFormErrorWrapper from "~/hooks/useFormErrorWrapper";
-import { useSentenceSessionQuery } from "~/hooks/sentences/useSentenceSessionQuery";
-import { SentenceSessionTestRepository } from "~/lib/services/sentenceSessionTests";
+import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
+import { useRadicalSessionAssessmentFinishMutation } from "~/hooks/radicals/useRadicalSessionAssessmentFinishMutation";
+import { useRadicalSessionAssessmentQuestionQuery } from "~/hooks/radicals/useRadicalSessionAssessmentQuestionQuery";
+import { RadicalSessionAssessmentRepository } from "~/lib/services/radicalSessionAssessments";
 import { BackendError } from "~/lib/errors";
 import { type UUID } from "~/types";
-import { isPracticeSessionTestQuestionToAudio } from "~/types/adapters";
-import { useSentenceSessionTestFinishMutation } from "~/hooks/sentences/useSentenceSessionTestFinishMutation";
-import { useSentenceSessionTestQuestionQuery } from "~/hooks/sentences/useSentenceSessionTestQuestionQuery";
+import { isPracticeSessionAssessmentQuestionToAudio } from "~/types/adapters";
 
-interface SentenceSessionPathParams {
-  testId: UUID;
+interface RadicalSessionPathParams {
+  assessmentId: UUID;
 }
 
-export default function SentenceSessionTestRoute() {
-  const params = useParams() as unknown as SentenceSessionPathParams;
+export default function RadicalSessionAssessmentRoute() {
+  const params = useParams() as unknown as RadicalSessionPathParams;
   const navigate = useNavigate();
   const [questionNum, setQuestionNum] = useState(1);
-  const sentenceSessionTestQuestionQuery = useSentenceSessionTestQuestionQuery({
-    id: params.testId ?? undefined,
-    questionNum: questionNum,
-  });
-  const sentenceSessionQuery = useSentenceSessionQuery(
-    sentenceSessionTestQuestionQuery.data?.sessionId || "",
+  const radicalSessionAssessmentQuestionQuery =
+    useRadicalSessionAssessmentQuestionQuery({
+      id: params.assessmentId ?? undefined,
+      questionNum: questionNum,
+    });
+  const radicalSessionQuery = useRadicalSessionQuery(
+    radicalSessionAssessmentQuestionQuery.data?.sessionId || "",
   );
   const [isOpen, setOpen] = useState(false);
   const errCtrl = useFormErrorWrapper();
-  const finishMutation = useSentenceSessionTestFinishMutation();
+  const finishMutation = useRadicalSessionAssessmentFinishMutation();
   const [isAnswering, setIsAnswering] = useState(false);
 
   const ANSWERS = ["a", "b", "c", "d", "e"] as const;
 
-  const handleConfirmTest = async () => {
+  const handleConfirmAssessment = async () => {
     try {
       errCtrl.resetFormError();
-      await finishMutation.mutateAsync(params.testId);
-      navigate(`/practice/sentences/tests/${params.testId}/result`);
+      await finishMutation.mutateAsync(params.assessmentId);
+      navigate(`/practice/radicals/assessments/${params.assessmentId}/result`);
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);
@@ -64,13 +65,13 @@ export default function SentenceSessionTestRoute() {
     try {
       errCtrl.resetFormError();
       setIsAnswering(true);
-      await SentenceSessionTestRepository.answer(
-        params.testId,
+      await RadicalSessionAssessmentRepository.answer(
+        params.assessmentId,
         questionNum,
         answer,
       );
 
-      if (sentenceSessionTestQuestionQuery.data?.next)
+      if (radicalSessionAssessmentQuestionQuery.data?.next)
         setQuestionNum(questionNum + 1);
     } catch (error: unknown) {
       if (error instanceof BackendError) {
@@ -83,48 +84,54 @@ export default function SentenceSessionTestRoute() {
 
   return (
     <Box>
-      {sentenceSessionQuery.isFetched ? (
+      {radicalSessionQuery.isFetched ? (
         <>
           <Dialog onClose={() => setOpen(false)} open={isOpen}>
-            <DialogTitle>Are you sure you want to finish the test?</DialogTitle>
+            <DialogTitle>
+              Are you sure you want to finish the assessment?
+            </DialogTitle>
             <DialogActions>
               <Button type="button" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button type="button" onClick={handleConfirmTest}>
+              <Button type="button" onClick={handleConfirmAssessment}>
                 Confirm
               </Button>
             </DialogActions>
           </Dialog>
           <Typography variant="h2">
-            Sentence Session -{" "}
-            {new Date(sentenceSessionQuery.data!.createdAt).toLocaleString()}
+            Radical Session -{" "}
+            {new Date(radicalSessionQuery.data!.createdAt).toLocaleString()}
           </Typography>
-          <Typography variant="h3">Test</Typography>
+          <Typography variant="h3">Assessment</Typography>
           <Button type="button" onClick={() => setOpen(true)}>
             Finish
           </Button>
-          {sentenceSessionTestQuestionQuery.isFetched ? (
+          {radicalSessionAssessmentQuestionQuery.isFetched ? (
             <FormErrorWrapper formErrorState={errCtrl.formErrorState}>
               <>
                 <Stack>
                   <Paper>
-                    {sentenceSessionTestQuestionQuery.data!.payload.question}
+                    {
+                      radicalSessionAssessmentQuestionQuery.data!.payload
+                        .question
+                    }
                   </Paper>
-                  {isPracticeSessionTestQuestionToAudio(
-                    sentenceSessionTestQuestionQuery.data!.payload,
+                  {isPracticeSessionAssessmentQuestionToAudio(
+                    radicalSessionAssessmentQuestionQuery.data!.payload,
                   ) ? (
                     <Paper>
                       <audio
                         controls
                         src={
-                          sentenceSessionTestQuestionQuery.data!.payload.audio
+                          radicalSessionAssessmentQuestionQuery.data!.payload
+                            .audio
                         }
                       />
                     </Paper>
                   ) : null}
                   <List>
-                    {sentenceSessionTestQuestionQuery.data!.payload.alternatives.map(
+                    {radicalSessionAssessmentQuestionQuery.data!.payload.alternatives.map(
                       (alternative, index) =>
                         alternative.type === "AUDIO" ? (
                           <ListItem key={index}>
@@ -153,7 +160,7 @@ export default function SentenceSessionTestRoute() {
                   </List>
                 </Stack>
                 <Box>
-                  {sentenceSessionTestQuestionQuery.data?.previous ? (
+                  {radicalSessionAssessmentQuestionQuery.data?.previous ? (
                     <Button
                       type="button"
                       onClick={() => setQuestionNum(questionNum - 1)}
@@ -161,7 +168,7 @@ export default function SentenceSessionTestRoute() {
                       Prev
                     </Button>
                   ) : null}
-                  {sentenceSessionTestQuestionQuery.data?.next ? (
+                  {radicalSessionAssessmentQuestionQuery.data?.next ? (
                     <Button
                       type="button"
                       onClick={() => setQuestionNum(questionNum + 1)}

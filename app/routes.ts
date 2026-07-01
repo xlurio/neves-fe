@@ -20,18 +20,36 @@ export default [
     ...prefix("practice", [
       route("radicals", "routes/practice/radicals.tsx"),
       ...prefix("radicals", [
-        route(":radicalSessionId", "routes/practice/radicals/[id]/index.tsx"),
+        route(":sessionId", "routes/practice/radicals/[id]/index.tsx"),
         route(
-          ":radicalSessionId/memorization",
+          ":sessionId/memorization",
           "routes/practice/radicals/[id]/memorization.tsx",
         ),
-        route("tests/:testId", "routes/practice/radicals/tests/[id]/index.tsx"),
         route(
-          "tests/:id/result",
-          "routes/practice/radicals/tests/[id]/result.tsx",
+          "assessments/:assessmentId",
+          "routes/practice/radicals/assessments/[id]/index.tsx",
+        ),
+        route(
+          "assessments/:id/result",
+          "routes/practice/radicals/assessments/[id]/result.tsx",
         ),
       ]),
       route("sentences", "routes/practice/sentences.tsx"),
+      ...prefix("sentences", [
+        route(":sessionId", "routes/practice/sentences/[id]/index.tsx"),
+        route(
+          ":sessionId/memorization",
+          "routes/practice/sentences/[id]/memorization.tsx",
+        ),
+        route(
+          "assessments/:assessmentId",
+          "routes/practice/sentences/assessments/[id]/index.tsx",
+        ),
+        route(
+          "assessments/:id/result",
+          "routes/practice/sentences/assessments/[id]/result.tsx",
+        ),
+      ]),
     ]),
   ]),
 ] satisfies RouteConfig;

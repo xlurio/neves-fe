@@ -1,10 +1,10 @@
 import type {
-  RadicalSessionTestQuestion,
+  RadicalSessionAssessmentQuestion,
   UUID,
   RadicalQuestionType,
-  PracticeSessionTestResultQuestion,
-  PracticeSessionTestResultQuestionToAudio,
-  PracticeSessionTestQuestionToAudio,
+  PracticeSessionAssessmentResultQuestion,
+  PracticeSessionAssessmentResultQuestionToAudio,
+  PracticeSessionAssessmentQuestionToAudio,
   Sentence,
   Word,
   Logogram,
@@ -43,13 +43,13 @@ export interface GetSentenceSessionWordLogogramsParams extends GetSentenceSessio
   logogramNum: number;
 }
 
-export interface GetPracticeSessionTestQuestionResponseSchema {
+export interface GetPracticeSessionAssessmentQuestionResponseSchema {
   count: number;
   next: URL | null;
   previous: URL | null;
   id: UUID;
   sessionId: UUID;
-  payload: RadicalSessionTestQuestion<RadicalQuestionType>;
+  payload: RadicalSessionAssessmentQuestion<RadicalQuestionType>;
 }
 
 export interface GetSentenceSessionSentenceResponseSchema {
@@ -73,9 +73,9 @@ export interface GetWordLogogramResponseSchema {
   payload: Logogram;
 }
 
-export function isPracticeSessionTestQuestionToAudio<QuestionClassType>(
+export function isPracticeSessionAssessmentQuestionToAudio<QuestionClassType>(
   value: unknown,
-): value is PracticeSessionTestQuestionToAudio<QuestionClassType> {
+): value is PracticeSessionAssessmentQuestionToAudio<QuestionClassType> {
   return (
     typeof value === "object" &&
     value !== null &&
@@ -90,22 +90,24 @@ export function isPracticeSessionTestQuestionToAudio<QuestionClassType>(
   );
 }
 
-export interface GetPracticeSessionTestResultResponseSchema<QuestionClassType> {
+export interface GetPracticeSessionAssessmentResultResponseSchema<
+  QuestionClassType,
+> {
   id: UUID;
   sessionId: UUID;
   score: number;
   questions: (
-    | PracticeSessionTestResultQuestion<QuestionClassType>
-    | PracticeSessionTestResultQuestionToAudio<QuestionClassType>
+    | PracticeSessionAssessmentResultQuestion<QuestionClassType>
+    | PracticeSessionAssessmentResultQuestionToAudio<QuestionClassType>
   )[];
 }
 
-export interface GetPracticeSessionTestQuestionParams {
+export interface GetPracticeSessionAssessmentQuestionParams {
   id: UUID;
   questionNum: number;
 }
 
-export interface AnswerPracticeSessionTestQuestionRequestSchema {
+export interface AnswerPracticeSessionAssessmentQuestionRequestSchema {
   id: UUID;
   questionNum: number;
   answer: "a" | "b" | "c" | "d" | "e";

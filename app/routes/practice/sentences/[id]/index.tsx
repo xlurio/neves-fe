@@ -14,8 +14,8 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 import type { UUID } from "~/types";
 import { useSentenceSessionQuery } from "~/hooks/sentences/useSentenceSessionQuery";
-import { useSentenceSessionTestsQuery } from "~/hooks/sentences/useSentenceSessionTestsQuery";
-import { useCreateSentenceSessionTestMutation } from "~/hooks/sentences/useCreateSentenceSessionTestMutation";
+import { useSentenceSessionAssessmentsQuery } from "~/hooks/sentences/useSentenceSessionAssessmentsQuery";
+import { useCreateSentenceSessionAssessmentMutation } from "~/hooks/sentences/useCreateSentenceSessionAssessmentMutation";
 
 interface SentenceSessionPathParams {
   sentenceSessionId: UUID;
@@ -27,14 +27,16 @@ export default function SentenceSessionRoute() {
   const sentenceSessionQuery = useSentenceSessionQuery(
     params.sentenceSessionId,
   );
-  const testsQuery = useSentenceSessionTestsQuery(params.sentenceSessionId);
-  const createTestMutation = useCreateSentenceSessionTestMutation(
+  const assessmentsQuery = useSentenceSessionAssessmentsQuery(
+    params.sentenceSessionId,
+  );
+  const createAssessmentMutation = useCreateSentenceSessionAssessmentMutation(
     params.sentenceSessionId,
   );
 
-  const handleCreateTest = async () => {
-    const test = await createTestMutation.mutateAsync();
-    navigate(`/practice/sentences/tests/${test.id}`);
+  const handleCreateAssessment = async () => {
+    const assessment = await createAssessmentMutation.mutateAsync();
+    navigate(`/practice/sentences/assessments/${assessment.id}`);
   };
 
   return (
@@ -57,10 +59,10 @@ export default function SentenceSessionRoute() {
               }
             </Paper>
             <Paper>
-              <Typography variant="h3">Test</Typography>
+              <Typography variant="h3">Assessment</Typography>
               {
-                <Button type="button" onClick={handleCreateTest}>
-                  New test
+                <Button type="button" onClick={handleCreateAssessment}>
+                  New assessment
                 </Button>
               }
               <Table>
@@ -72,16 +74,16 @@ export default function SentenceSessionRoute() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {testsQuery.isFetched ? (
-                    testsQuery.data?.results.map((test) => (
-                      <TableRow key={test.id}>
+                  {assessmentsQuery.isFetched ? (
+                    assessmentsQuery.data?.results.map((assessment) => (
+                      <TableRow key={assessment.id}>
                         <TableCell>
-                          {new Date(test.finishedAt).toLocaleString()}
+                          {new Date(assessment.finishedAt).toLocaleString()}
                         </TableCell>
-                        <TableCell>{test.score}/100</TableCell>
+                        <TableCell>{assessment.score}/100</TableCell>
                         <TableCell>
                           <Link
-                            href={`/practice/sentences/tests/${test.id}/result`}
+                            href={`/practice/sentences/assessments/${assessment.id}/result`}
                           >
                             Check result
                           </Link>

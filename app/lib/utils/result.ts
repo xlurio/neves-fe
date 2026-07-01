@@ -1,15 +1,15 @@
 import type {
-  PracticeSessionTestResultQuestion,
-  PracticeSessionTestResultQuestionToAudio,
+  PracticeSessionAssessmentResultQuestion,
+  PracticeSessionAssessmentResultQuestionToAudio,
 } from "~/types";
 
 export const ANSWER_ALTERNATIVES = ["a", "b", "c", "d", "e"] as const;
 
 export function hasQuestionAudio<QuestionClassType>(
   question:
-    | PracticeSessionTestResultQuestion<QuestionClassType>
-    | PracticeSessionTestResultQuestionToAudio<QuestionClassType>,
-): question is PracticeSessionTestResultQuestionToAudio<QuestionClassType> {
+    | PracticeSessionAssessmentResultQuestion<QuestionClassType>
+    | PracticeSessionAssessmentResultQuestionToAudio<QuestionClassType>,
+): question is PracticeSessionAssessmentResultQuestionToAudio<QuestionClassType> {
   return "audio" in question;
 }
 

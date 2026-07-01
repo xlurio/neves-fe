@@ -10,26 +10,22 @@ import Typography from "@mui/material/Typography";
 import { useParams } from "react-router";
 import { useRadicalSessionQuery } from "~/hooks/radicals/useRadicalSessionQuery";
 import { useRadicalSessionRadicalsQuery } from "~/hooks/radicals/useRadicalSessionRadicalsQuery";
-import type { UUID } from "~/types";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useRadicalSessionRadicalsMutation } from "~/hooks/radicals/useRadicalSessionRadicalsMutation";
 import Link from "@mui/material/Link";
-
-interface RadicalSessionPathParams {
-  radicalSessionId: UUID;
-}
+import type { PracticeSessionPathParams } from "~/types/components";
 
 export default function RadicalSessionMemorizationRoute() {
-  const params = useParams() as unknown as RadicalSessionPathParams;
-  const radicalSessionQuery = useRadicalSessionQuery(params.radicalSessionId);
+  const params = useParams() as unknown as PracticeSessionPathParams;
+  const radicalSessionQuery = useRadicalSessionQuery(params.sessionId);
   const [page, setPage] = useState(1);
   const radicalSessionRadicalsQuery = useRadicalSessionRadicalsQuery({
-    id: params.radicalSessionId,
+    id: params.sessionId,
     page,
   });
   const radicalSessionRadicalsMutation = useRadicalSessionRadicalsMutation(
-    params.radicalSessionId,
+    params.sessionId,
   );
 
   const handleAddRadical = async () => {
@@ -41,9 +37,7 @@ export default function RadicalSessionMemorizationRoute() {
     <Box>
       {radicalSessionQuery.isFetched ? (
         <>
-          <Link href={`/practice/radicals/${params.radicalSessionId}`}>
-            Go Back
-          </Link>
+          <Link href={`/practice/radicals/${params.sessionId}`}>Go Back</Link>
           <Typography variant="h2">
             Radical Session -{" "}
             {radicalSessionRadicalsQuery.isFetched ??
