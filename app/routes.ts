@@ -34,20 +34,20 @@ export default [
           "routes/practice/radicals/assessments/[id]/result.tsx",
         ),
       ]),
-      route("sentences", "routes/practice/sentences.tsx"),
-      ...prefix("sentences", [
-        route(":sessionId", "routes/practice/sentences/[id]/index.tsx"),
+      route("ngrams", "routes/practice/ngrams.tsx"),
+      ...prefix("ngrams", [
+        route(":sessionId", "routes/practice/ngrams/[id]/index.tsx"),
         route(
           ":sessionId/memorization",
-          "routes/practice/sentences/[id]/memorization.tsx",
+          "routes/practice/ngrams/[id]/memorization.tsx",
         ),
         route(
           "assessments/:assessmentId",
-          "routes/practice/sentences/assessments/[id]/index.tsx",
+          "routes/practice/ngrams/assessments/[id]/index.tsx",
         ),
         route(
           "assessments/:id/result",
-          "routes/practice/sentences/assessments/[id]/result.tsx",
+          "routes/practice/ngrams/assessments/[id]/result.tsx",
         ),
       ]),
     ]),

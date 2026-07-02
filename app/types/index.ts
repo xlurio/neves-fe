@@ -54,7 +54,7 @@ export interface UserStatistics {
   radicals: {
     progress: number;
   };
-  sentences: {
+  ngrams: {
     isUnlocked: boolean;
     progress: number;
   };
@@ -71,8 +71,8 @@ export interface RadicalPracticeSession extends PracticeSession {
   numOfRadicals: number;
 }
 
-export interface SentencePracticeSession extends PracticeSession {
-  numOfSentenceCls: number;
+export interface NgramPracticeSession extends PracticeSession {
+  numOfNgramCls: number;
 }
 
 export interface PracticeSessionAssessment {
@@ -88,7 +88,7 @@ export interface Radical {
   pronounce: URL;
 }
 
-export interface Sentence {
+export interface Ngram {
   id: number;
   value: string;
   meaning: string;
@@ -165,7 +165,7 @@ export type RadicalQuestionType =
   | "MEANING-TO-LOGOGRAM"
   | "PINYIN-TO-LOGOGRAM";
 
-export type SentenceQuestionType =
+export type NgramQuestionType =
   | "SENTENCE-AUDIO-TO-WORD-AUDIO"
   | "SENTENCE-TEXT-TO-WORD-AUDIO"
   | "SENTENCE-AUDIO-TO-WORD-TEXT"

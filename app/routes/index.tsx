@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { useUserStatisticsQuery } from "~/hooks/useUserStatisticsQuery";
 import type { UserStatistics } from "~/types";
 
-interface SentencesPaperParams {
+interface NgramsPaperParams {
   userStats: UserStatistics;
 }
 
@@ -18,13 +18,13 @@ const IndexPaper = styled(Paper)(() => ({
   padding: "1em",
 }));
 
-function SentencesPaper({ userStats }: SentencesPaperParams) {
+function NgramsPaper({ userStats }: NgramsPaperParams) {
   return (
     <IndexPaper>
-      <Typography variant="h3">Sentences</Typography>
+      <Typography variant="h3">Sequences</Typography>
       <LinearProgress
         variant="determinate"
-        value={userStats.sentences.progress || 0}
+        value={userStats.ngrams.progress || 0}
         aria-label="Radicals learned"
       />
     </IndexPaper>
@@ -51,13 +51,13 @@ export default function IndexRoute() {
                 />
               </IndexPaper>
             </Link>
-            {userStats!.sentences.isUnlocked ? (
-              <Link href="/practice/sentences">
-                <SentencesPaper userStats={userStats!} />
+            {userStats!.ngrams.isUnlocked ? (
+              <Link href="/practice/ngrams">
+                <NgramsPaper userStats={userStats!} />
               </Link>
             ) : (
               <Tooltip title="Learn more radicals to unlock">
-                <SentencesPaper userStats={userStats!} />
+                <NgramsPaper userStats={userStats!} />
               </Tooltip>
             )}
             <IndexPaper>

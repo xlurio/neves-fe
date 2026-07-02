@@ -1,16 +1,16 @@
-import type { GetSentenceSessionWordLogogramsParams } from "~/types/adapters";
-import { getSentenceSessionWordLogograms } from "../adapters/sentences";
+import type { GetNgramSessionWordLogogramsParams } from "~/types/adapters";
+import { getNgramSessionWordLogograms } from "../adapters/ngrams";
 
 export class WordLogogramRepository {
   public static async getBySessionAndPosition({
     id,
-    sentenceNum,
+    ngramNum,
     wordNum,
     logogramNum,
-  }: GetSentenceSessionWordLogogramsParams) {
-    return getSentenceSessionWordLogograms({
+  }: GetNgramSessionWordLogogramsParams) {
+    return getNgramSessionWordLogograms({
       id,
-      sentenceNum,
+      ngramNum,
       wordNum,
       logogramNum,
     });

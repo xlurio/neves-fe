@@ -49,25 +49,25 @@ type Pages = {
       "id": string;
     };
   };
-  "/practice/sentences": {
+  "/practice/ngrams": {
     params: {};
   };
-  "/practice/sentences/:sessionId": {
+  "/practice/ngrams/:sessionId": {
     params: {
       "sessionId": string;
     };
   };
-  "/practice/sentences/:sessionId/memorization": {
+  "/practice/ngrams/:sessionId/memorization": {
     params: {
       "sessionId": string;
     };
   };
-  "/practice/sentences/assessments/:assessmentId": {
+  "/practice/ngrams/assessments/:assessmentId": {
     params: {
       "assessmentId": string;
     };
   };
-  "/practice/sentences/assessments/:id/result": {
+  "/practice/ngrams/assessments/:id/result": {
     params: {
       "id": string;
     };
@@ -77,7 +77,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:sessionId" | "/practice/radicals/:sessionId/memorization" | "/practice/radicals/assessments/:assessmentId" | "/practice/radicals/assessments/:id/result" | "/practice/sentences" | "/practice/sentences/:sessionId" | "/practice/sentences/:sessionId/memorization" | "/practice/sentences/assessments/:assessmentId" | "/practice/sentences/assessments/:id/result";
+    page: "/" | "/login" | "/register" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:sessionId" | "/practice/radicals/:sessionId/memorization" | "/practice/radicals/assessments/:assessmentId" | "/practice/radicals/assessments/:id/result" | "/practice/ngrams" | "/practice/ngrams/:sessionId" | "/practice/ngrams/:sessionId/memorization" | "/practice/ngrams/assessments/:assessmentId" | "/practice/ngrams/assessments/:id/result";
   };
   "layouts/AuthLayout.tsx": {
     id: "layouts/AuthLayout";
@@ -93,7 +93,7 @@ type RouteFiles = {
   };
   "layouts/ProtectedLayout.tsx": {
     id: "layouts/ProtectedLayout";
-    page: "/" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:sessionId" | "/practice/radicals/:sessionId/memorization" | "/practice/radicals/assessments/:assessmentId" | "/practice/radicals/assessments/:id/result" | "/practice/sentences" | "/practice/sentences/:sessionId" | "/practice/sentences/:sessionId/memorization" | "/practice/sentences/assessments/:assessmentId" | "/practice/sentences/assessments/:id/result";
+    page: "/" | "/learning/radicals" | "/learning/frequency" | "/practice/radicals" | "/practice/radicals/:sessionId" | "/practice/radicals/:sessionId/memorization" | "/practice/radicals/assessments/:assessmentId" | "/practice/radicals/assessments/:id/result" | "/practice/ngrams" | "/practice/ngrams/:sessionId" | "/practice/ngrams/:sessionId/memorization" | "/practice/ngrams/assessments/:assessmentId" | "/practice/ngrams/assessments/:id/result";
   };
   "routes/index.tsx": {
     id: "routes/index";
@@ -127,25 +127,25 @@ type RouteFiles = {
     id: "routes/practice/radicals/assessments/[id]/result";
     page: "/practice/radicals/assessments/:id/result";
   };
-  "routes/practice/sentences.tsx": {
-    id: "routes/practice/sentences";
-    page: "/practice/sentences";
+  "routes/practice/ngrams.tsx": {
+    id: "routes/practice/ngrams";
+    page: "/practice/ngrams";
   };
-  "routes/practice/sentences/[id]/index.tsx": {
-    id: "routes/practice/sentences/[id]/index";
-    page: "/practice/sentences/:sessionId";
+  "routes/practice/ngrams/[id]/index.tsx": {
+    id: "routes/practice/ngrams/[id]/index";
+    page: "/practice/ngrams/:sessionId";
   };
-  "routes/practice/sentences/[id]/memorization.tsx": {
-    id: "routes/practice/sentences/[id]/memorization";
-    page: "/practice/sentences/:sessionId/memorization";
+  "routes/practice/ngrams/[id]/memorization.tsx": {
+    id: "routes/practice/ngrams/[id]/memorization";
+    page: "/practice/ngrams/:sessionId/memorization";
   };
-  "routes/practice/sentences/assessments/[id]/index.tsx": {
-    id: "routes/practice/sentences/assessments/[id]/index";
-    page: "/practice/sentences/assessments/:assessmentId";
+  "routes/practice/ngrams/assessments/[id]/index.tsx": {
+    id: "routes/practice/ngrams/assessments/[id]/index";
+    page: "/practice/ngrams/assessments/:assessmentId";
   };
-  "routes/practice/sentences/assessments/[id]/result.tsx": {
-    id: "routes/practice/sentences/assessments/[id]/result";
-    page: "/practice/sentences/assessments/:id/result";
+  "routes/practice/ngrams/assessments/[id]/result.tsx": {
+    id: "routes/practice/ngrams/assessments/[id]/result";
+    page: "/practice/ngrams/assessments/:id/result";
   };
 };
 
@@ -163,9 +163,9 @@ type RouteModules = {
   "routes/practice/radicals/[id]/memorization": typeof import("./app/routes/practice/radicals/[id]/memorization.tsx");
   "routes/practice/radicals/assessments/[id]/index": typeof import("./app/routes/practice/radicals/assessments/[id]/index.tsx");
   "routes/practice/radicals/assessments/[id]/result": typeof import("./app/routes/practice/radicals/assessments/[id]/result.tsx");
-  "routes/practice/sentences": typeof import("./app/routes/practice/sentences.tsx");
-  "routes/practice/sentences/[id]/index": typeof import("./app/routes/practice/sentences/[id]/index.tsx");
-  "routes/practice/sentences/[id]/memorization": typeof import("./app/routes/practice/sentences/[id]/memorization.tsx");
-  "routes/practice/sentences/assessments/[id]/index": typeof import("./app/routes/practice/sentences/assessments/[id]/index.tsx");
-  "routes/practice/sentences/assessments/[id]/result": typeof import("./app/routes/practice/sentences/assessments/[id]/result.tsx");
+  "routes/practice/ngrams": typeof import("./app/routes/practice/ngrams.tsx");
+  "routes/practice/ngrams/[id]/index": typeof import("./app/routes/practice/ngrams/[id]/index.tsx");
+  "routes/practice/ngrams/[id]/memorization": typeof import("./app/routes/practice/ngrams/[id]/memorization.tsx");
+  "routes/practice/ngrams/assessments/[id]/index": typeof import("./app/routes/practice/ngrams/assessments/[id]/index.tsx");
+  "routes/practice/ngrams/assessments/[id]/result": typeof import("./app/routes/practice/ngrams/assessments/[id]/result.tsx");
 };

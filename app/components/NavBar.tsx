@@ -31,8 +31,8 @@ export default function NavBar({ doShowLogout = false }: NavBarProps) {
           <Link color="inherit" underline="none" href="/practice/radicals">
             Radicals
           </Link>
-          <Link color="inherit" underline="none" href="/practice/sentences">
-            Sentences
+          <Link color="inherit" underline="none" href="/practice/ngrams">
+            Ngrams
           </Link>
         </Stack>
         {doShowLogout && (

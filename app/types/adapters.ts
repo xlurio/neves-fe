@@ -5,7 +5,7 @@ import type {
   PracticeSessionAssessmentResultQuestion,
   PracticeSessionAssessmentResultQuestionToAudio,
   PracticeSessionAssessmentQuestionToAudio,
-  Sentence,
+  Ngram,
   Word,
   Logogram,
 } from "~/types";
@@ -30,16 +30,16 @@ export interface PaginatedForIdEndpointParams extends PaginatedEndpointParams {
   id: UUID;
 }
 
-export interface GetSentenceSessionSentenceParams {
+export interface GetNgramSessionNgramParams {
   id: UUID;
-  sentenceNum: number;
+  ngramNum: number;
 }
 
-export interface GetSentenceSessionSentenceWordsParams extends GetSentenceSessionSentenceParams {
+export interface GetNgramSessionNgramWordsParams extends GetNgramSessionNgramParams {
   wordNum: number;
 }
 
-export interface GetSentenceSessionWordLogogramsParams extends GetSentenceSessionSentenceWordsParams {
+export interface GetNgramSessionWordLogogramsParams extends GetNgramSessionNgramWordsParams {
   logogramNum: number;
 }
 
@@ -52,14 +52,14 @@ export interface GetPracticeSessionAssessmentQuestionResponseSchema {
   payload: RadicalSessionAssessmentQuestion<RadicalQuestionType>;
 }
 
-export interface GetSentenceSessionSentenceResponseSchema {
+export interface GetNgramSessionNgramResponseSchema {
   count: number;
   next: URL | null;
   previous: URL | null;
-  payload: Sentence;
+  payload: Ngram;
 }
 
-export interface GetSentenceWordResponseSchema {
+export interface GetNgramWordResponseSchema {
   count: number;
   next: URL | null;
   previous: URL | null;
