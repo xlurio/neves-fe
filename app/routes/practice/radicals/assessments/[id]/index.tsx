@@ -19,7 +19,6 @@ import { useRadicalSessionAssessmentQuestionQuery } from "~/hooks/radicals/useRa
 import { RadicalSessionAssessmentRepository } from "~/lib/services/radicalSessionAssessments";
 import { BackendError } from "~/lib/errors";
 import { type UUID } from "~/types";
-import { isPracticeSessionAssessmentQuestionToAudio } from "~/types/adapters";
 
 interface RadicalSessionPathParams {
   assessmentId: UUID;
@@ -73,6 +72,9 @@ export default function RadicalSessionAssessmentRoute() {
 
       if (radicalSessionAssessmentQuestionQuery.data?.next)
         setQuestionNum(questionNum + 1);
+      else {
+        setOpen(true);
+      }
     } catch (error: unknown) {
       if (error instanceof BackendError) {
         errCtrl.setFormError(error.message, error.details);

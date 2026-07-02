@@ -1,9 +1,11 @@
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { api } from "~/lib/api";
+import Stack from "@mui/material/Stack";
+import Link from "@mui/material/Link";
 
 interface NavBarProps {
   doShowLogout?: boolean;
@@ -22,8 +24,17 @@ export default function NavBar({ doShowLogout = false }: NavBarProps) {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Link to="/">Home</Link>
-        <Link to="/practice/radicals">Radicals</Link>
+        <Stack direction="row" spacing="1em" sx={{ width: "100%" }}>
+          <Link color="inherit" underline="none" href="/">
+            Home
+          </Link>
+          <Link color="inherit" underline="none" href="/practice/radicals">
+            Radicals
+          </Link>
+          <Link color="inherit" underline="none" href="/practice/sentences">
+            Sentences
+          </Link>
+        </Stack>
         {doShowLogout && (
           <Button color="inherit" onClick={handleLogout}>
             Logout

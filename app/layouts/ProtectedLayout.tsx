@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import NavBar from "~/components/NavBar";
 import { useCurrentUserQuery } from "~/hooks/useCurrentUserQuery";
 import { UnauthenticatedError } from "~/lib/errors";
+import MainContainer from "~/components/MainContainer";
 
 export default function ProtectedLayout() {
   const { error, isPending } = useCurrentUserQuery();
@@ -21,7 +22,9 @@ export default function ProtectedLayout() {
   return (
     <>
       <NavBar doShowLogout />
-      <Outlet />
+      <MainContainer>
+        <Outlet />
+      </MainContainer>
     </>
   );
 }

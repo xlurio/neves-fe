@@ -12,6 +12,7 @@ import { useState } from "react";
 
 import type { Route } from "./+types/root";
 import theme from "./theme";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -36,7 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="" style={{ margin: 0 }}>
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -51,6 +52,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
+        <CssBaseline enableColorScheme />
         <Outlet />
       </ThemeProvider>
     </QueryClientProvider>

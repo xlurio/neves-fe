@@ -27,6 +27,9 @@ const theme = createTheme({
       },
     },
   },
+  palette: {
+    mode: "dark",
+  },
 });
 
 export default theme;
