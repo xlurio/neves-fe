@@ -32,7 +32,7 @@ export default function NavBar({ doShowLogout = false }: NavBarProps) {
             Radicals
           </Link>
           <Link color="inherit" underline="none" href="/practice/ngrams">
-            Ngrams
+            Sequences
           </Link>
         </Stack>
         {doShowLogout && (
